@@ -1,0 +1,63 @@
+#logo
+{
+	margin-top:-20px;
+	height: 70px;
+}
+
+.bannerSearch
+{
+    width:400px;
+}
+
+.bannerSearchBox
+{
+    width: 100%;
+}
+
+.topPadding
+{
+    padding-top: 50px;
+}
+
+
+.jumbotron
+{
+	/*background-color: #17D1FF;*/
+}
+
+.fb {
+    background: url('/static/img/fb_200.png');
+    background-size: cover;
+    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
+
+    border-radius: 5px;
+    width: 260px;
+    height: 37px;
+    margin-top: 10px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ln {
+    background: url('/static/img/ln-signin-small-default.png');
+    background-size: cover;
+    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
+    border-radius: 5px;
+    width: 260px;
+    height: 37px;
+    margin-top: 80px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer
+{
+    height: 75px;
+    background-color: #E6E6E6;
+    color: #000000;
+    width: 100%;
+    padding: 10px;
+    margin-top: 50px;
+}
