@@ -1,0 +1,79 @@
+{% extends "main/base.html" %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Konect</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form navbar-right" action={% url "main:login" %} method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" placeholder="Email" name="username" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Log in</button>
+                <a class="navbar-link" href="#">Forgot Password?</a>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+            <div id="signup">
+                <h1>Sign Up</h1>
+                <h3>It's Free...</h3>
+                <hr>
+                {% if error_message %}
+                    <div class="alert alert-danger center" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+                <form class="form form-inline" role="form" action="{% url 'main:signup' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-4" for="first_name">First name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First name" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-4" for="last_name">Last name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last name" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-4" for="email">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-4" for="password">Password:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group center">
+
+                        <button type="submit" class="btn-lg btn-success btn-block">Sign up</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+{% include 'main/footer.html' %}

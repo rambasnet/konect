@@ -1,4 +1,5 @@
-from base import *
+from konect.settings.base import *
+
 
 DEBUG = True
 
@@ -11,3 +12,5 @@ DATABASES = {
         'HOST': 'localhost'
     }
 }
+
+SITE_URL = 'localhost:8000'

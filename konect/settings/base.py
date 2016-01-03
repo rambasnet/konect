@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+#print('basedir = ', BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -25,8 +26,7 @@ SECRET_KEY = 'c9&x07n#3+r$f%d8dc^$+q6r=8ffl(200@q^-^!b&5jgo6$oq0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", 'conext.rocks']
 
 # Application definition
 #builtin and third party apps go here
@@ -37,6 +37,7 @@ PREREQ_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3'
 ]
 
 #APP specific apps go in this list
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'konect.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,6 +92,12 @@ DATABASES = {
     }
 }
 
+#for gmail or google aps
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'couniconext@gmail.com'
+EMAIL_HOST_PASSWORD = 'h^neh6XxQXNI!'
+EMAIL_PORT = 587
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -129,3 +136,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/login/'
+
+LOGOUT_URL = '/logout/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+'''STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static', 'static'),
+                  '/var/www/static/',
+               ]
+'''
+
+# Settings for django-bootstrap3
+BOOTSTRAP3 = {
+    'set_required': False,
+    'error_css_class': 'bootstrap3-error',
+    'required_css_class': 'bootstrap3-required',
+    'javascript_in_head': True,
+}
+
+SITE_URL = 'localhost:8000'
+
+BRAND_NAME = 'Konect'
