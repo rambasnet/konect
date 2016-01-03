@@ -156,6 +156,5 @@ BOOTSTRAP3 = {
     'javascript_in_head': True,
 }
 
-SITE_URL = 'localhost:8000'
-
+HTTP_PROTOCOL = 'http'
 BRAND_NAME = 'Konect'

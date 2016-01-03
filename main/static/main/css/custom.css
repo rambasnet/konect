@@ -32,7 +32,7 @@ a:link, a:visited, a:hover, a:active
 	color: dimgray;
 }
 
-#signup
+#signup, #login
 {
 	margin-top: 50px;
 	width: 500px;

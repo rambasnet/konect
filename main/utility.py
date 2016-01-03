@@ -7,3 +7,7 @@ def get_protocol(request):
     else:
         return 'http'
 
+
+def get_site_url(request):
+    site_url = u'{0:s}://{1:s}'.format(get_protocol(request), request.get_host())
+    return site_url

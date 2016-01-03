@@ -13,4 +13,5 @@ DATABASES = {
     }
 }
 
-SITE_URL = 'localhost:8000'
+HTTP_PROTOCOL = 'http'
+
