@@ -156,5 +156,4 @@ BOOTSTRAP3 = {
     'javascript_in_head': True,
 }
 
-HTTP_PROTOCOL = 'http'
 BRAND_NAME = 'Konect'

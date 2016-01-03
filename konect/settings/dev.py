@@ -13,5 +13,4 @@ DATABASES = {
     }
 }
 
-HTTP_PROTOCOL = 'http'
 
