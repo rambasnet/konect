@@ -1,14 +1,15 @@
 {% extends "main/base.html" %}
-{% block title %}Konect | Login{% endblock title %}
+{% load main_extras %}
+
+{% block title %}{% brand_name %} - Log In{% endblock title %}
 
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
-{% block brand %}{{ brand_name }}{% endblock brand %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div id="signup">
-                <h2>Login to access your account</h2>
+                <h3>{% brand_name %} Log In</h3>
                 <hr>
                 {% if error_message %}
                     <div class="alert alert-danger fade in form-group center" role="alert">
@@ -35,7 +36,10 @@
                     </div>
 
                     <div class="form-group center">
-                        <button type="submit" class="btn-lg btn-success btn-block">Login</button>
+                        <button type="submit" class="btn btn-success">Log In</button> or <a href="{% url 'main:signup' %}">Sign up</a>
+                    </div>
+                    <div>
+                    <a href="{% url 'main:recover' %}">Forgot Password?</a>
                     </div>
                 </form>
             </div>

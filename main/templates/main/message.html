@@ -1,8 +1,8 @@
 {% extends 'main/base.html' %}
+{% load main_extras %}
 
-{% block title %}Konect | Message {% endblock title %}
+{% block title %}{% brand_name %} - Message {% endblock title %}
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
-{% block brand %}{% brand_name %} {% endblock brand %}
 
 {% block content %}
     {% if message_type == 'success' %}

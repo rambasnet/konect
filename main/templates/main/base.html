@@ -1,3 +1,5 @@
+{%  load main_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +10,7 @@
 
     <link rel="icon" href="/static/main/img/favicon.ico">
 
-    <title>{% block title %}Konect{% endblock title %}</title>
+    <title>{% block title %}{% brand_name %}{% endblock title %}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
@@ -30,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% block site_link %}{% endblock site_link %}">{% block brand %}K{% endblock brand %}</a>
+            <a class="navbar-brand" href="{% block site_link %}{% endblock site_link %}">{% brand_name %}</a>
         </div>
         {% block nav_content %}{% endblock nav_content %}
     </div>
@@ -39,13 +41,12 @@
 {% block content %}{% endblock content %}
 
 <footer>
-    <div style="margin-top:10px;">
-        &copy; Konect, 2016 |
+        &copy; {% brand_name %}, {% current_year %} |
         <a href="#">User Agreement</a> |
         <a href="#">Privacy Policy</a>
-    </div>
-    {% block footer_content %}{%  endblock footer_content %}
+        {% block footer_content %}{%  endblock footer_content %}
 </footer>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"

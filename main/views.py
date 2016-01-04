@@ -27,7 +27,7 @@ def index(request):
     print('brand name = ', settings.BRAND_NAME)
     return render(request,
                   'main/index.html',
-                  {'brand_name': settings.BRAND_NAME,
+                  {
                     'site_url': site_url,
                   })
 
@@ -72,7 +72,7 @@ def user_login(request):
         # dictionary object...
         return render(request,
                       'main/login.html',
-                      {'brand_name': settings.BRAND_NAME,
+                      {
                        'site_url': site_url,
                        })
 
@@ -125,7 +125,7 @@ def signup(request):
     else:
         return render(request,
                       'main/signup.html',
-                        {'brand_name': settings.BRAND_NAME,
+                        {
                          'site_url':site_url,
                          })
 
@@ -191,7 +191,7 @@ def signup(request):
 
         return render(request,
                       'main/message.html',
-                      {'brand_name:': settings.BRAND_NAME,
+                      {
                        'site_url': site_url,
                        'message_type': 'success',
                        'message': ' '.join(error_message),
@@ -201,7 +201,7 @@ def signup(request):
         template = 'main/signup.html'
         return render(request,
                       template,
-                      {'brand_name:': settings.BRAND_NAME,
+                      {
                        'site_url': site_url,
                        'error_message': ' '.join(error_message),
                        'first_name': first_name,
@@ -209,11 +209,6 @@ def signup(request):
                        'email': email,
                        'password': password,
                        })
-
-
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
 
 
 def logout(request):
@@ -257,7 +252,7 @@ def activate(request, activation_key):
 
     return render(request,
                   'main/message.html',
-                  {'brand_name': settings.BRAND_NAME,
+                  {
                    'site_url': site_url,
                    'message_type': message_type,
                    'message': message,
@@ -268,3 +263,6 @@ def activate(request, activation_key):
 def profile(request):
     return render(request, 'main/profile.html', {})
 
+
+def recover(request):
+    return render(request, 'main/recover.html', {})

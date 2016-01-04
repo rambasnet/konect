@@ -1,8 +1,9 @@
 {% extends "main/base.html" %}
-{% block title %}Konect | Signup{% endblock title %}
+{% load main_extras %}
+
+{% block title %}{% brand_name %} | Sign Up{% endblock title %}
 
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
-{% block brand %}{{ brand_name }}{% endblock brand %}
 
 {% block content %}
     <div class="container">

@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.user_login, name='login'),
     url(r'^signup/', views.signup, name='signup'),
-    url(r'^restricted/', views.restricted, name='restricted'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^activate/(.*)/$', views.activate, name='activate'),
     url(r'^profile/', views.profile, name='profile'),
+    url(r'^recover/', views.recover, name='recover')
 ]
