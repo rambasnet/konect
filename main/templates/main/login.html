@@ -1,7 +1,7 @@
-{% extends "main/base.html" %}
+{% extends "main/__base.html" %}
 {% load main_extras %}
 
-{% block title %}{% brand_name %} - Log In{% endblock title %}
+{% block title %}{{ block.super }} | Log In{% endblock title %}
 
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
 

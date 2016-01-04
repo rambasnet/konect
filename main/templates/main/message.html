@@ -1,7 +1,6 @@
-{% extends 'main/base.html' %}
-{% load main_extras %}
+{% extends 'main/__base.html' %}
 
-{% block title %}{% brand_name %} - Message {% endblock title %}
+{% block title %}{{ block.super }} | Message {% endblock title %}
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
 
 {% block content %}
