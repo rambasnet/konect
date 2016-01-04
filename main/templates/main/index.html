@@ -1,7 +1,8 @@
 {% extends "main/base.html" %}
 {% block title %}Konect | Professional connection on a personal level {% endblock title %}
 
-{% block domain %}{{ domain |safe }}{% endblock domain %}
+{% block brand %}{{ brand_name }}{% endblock brand %}
+{% block site_link %}{{ site_url |safe }}{% endblock site_link %}
 {% block nav_content %}
     {{  block.supuer }}
         <div id="navbar" class="navbar-collapse collapse">
@@ -30,7 +31,7 @@
                     <div class="alert alert-danger fade in center" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        {{ error_message }}
+                        {{ error_message | safe }}
                     </div>
                 {% endif %}
                 <form class="form form-inline" role="form" action="{% url 'main:signup' %}" method="post">

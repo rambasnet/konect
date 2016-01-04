@@ -23,9 +23,13 @@ from main import utility
 
 
 def index(request):
-    return render_to_response('main/index.html',
-                              locals(),
-                              context_instance=RequestContext(request))
+    site_url = utility.get_site_url(request)
+    print('brand name = ', settings.BRAND_NAME)
+    return render(request,
+                  'main/index.html',
+                  {'brand_name': settings.BRAND_NAME,
+                    'site_url': site_url,
+                  })
 
 
 def user_login(request):
@@ -66,7 +70,11 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence blank
         # dictionary object...
-        return render(request, 'main/login.html', {'domain': settings.SITE_URL,})
+        return render(request,
+                      'main/login.html',
+                      {'brand_name': settings.BRAND_NAME,
+                       'site_url': site_url,
+                       })
 
 
 def signup(request):
@@ -74,22 +82,23 @@ def signup(request):
     # Set to False initially. Code changes value to True when registration succeeds.
     error_message = []
     site_url = utility.get_site_url(request)
+
     valid = False
     error_message = []
     message_type = 'info'
+    first_name = ''
+    last_name = ''
+    email = ''
+    password = ''
+    # path = request.get_full_path()
+    # print('path = ', path)
     if request.user.is_authenticated():
         # user already has an account and is authenticated; don't let them register again
-        error_message = [u'You are logged in as {0:s}. If you want to log in to another account, '
-                         u'<a class="btn btn-success" href="/logout/">Logout</a> first '
-                         u'and re-login.'.format(html.escape(request.user.email))]
-
-        #return render_to_response('main/message.html',
-        #                          {'domain': settings.SITE_URL,
-        #                           'message_type:': 'info',
-        #                           'message': message})
-
+        error_message = [u'You are logged in as {0:s}. If you want to register another account, '
+                         u'<a href="/logout/">Logout</a> first.'.format(html.escape(request.user.email))]
+        valid = False
     # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
+    elif request.method == 'POST':
         first_name = request.POST.get('first_name', '')
         last_name = request.POST.get('last_name', '')
         email = request.POST.get('email', '')
@@ -97,47 +106,30 @@ def signup(request):
 
         if not first_name or not last_name or not email or not password:
             error_message = [u'You must fill in all of the fields.']
-            return render(request,
-                          'main/index.html',
-                          {'domain': settings.SITE_URL,
-                           'error_message': ' '.join(error_message),
-                           'first_name': first_name,
-                           'last_name': last_name,
-                           'email': email,
-                           'password': password,
-                           })
+            valid = False
+        else:
+            # check for duplicate username and email
+            user = User.objects.filter(Q(username=email) | Q(email=email))
+            if user:
+                error_message = [u'Account with email {0:s} already exists. <a href="/password_recover/">'
+                                 u'Forgot your password? </a>'.format(html.escape(email))]
+                valid = False
+            else:
+                try:
+                    validate_password(password)
+                    valid = True
+                except ValidationError as ex:
+                    valid = False
+                    for e in ex:
+                        error_message.append(e)
+    else:
+        return render(request,
+                      'main/signup.html',
+                        {'brand_name': settings.BRAND_NAME,
+                         'site_url':site_url,
+                         })
 
-        # check for duplicate username and email
-        user = User.objects.filter(Q(username=email) | Q(email=email))
-
-        if user:
-            error_message = [u'Account with email {0:s} already exists. Please use different email or '
-                             'recover your password for the account.'.format(html.escape(email))]
-            return render(request,
-                          'main/index.html',
-                          {'domain': settings.SITE_URL,
-                           'error_message': ' '.join(error_message),
-                           'first_name': first_name,
-                           'last_name': last_name,
-                           'email': email,
-                           'password': password,
-                           })
-
-        try:
-            validate_password(password)
-        except ValidationError as ex:
-            for e in ex:
-                error_message.append(e)
-            return render(request,
-                          'main/index.html',
-                          {'domain': settings.SITE_URL,
-                           'error_message': ' '.join(error_message),
-                           'first_name': first_name,
-                           'last_name': last_name,
-                           'email': email,
-                           'password': password,
-                           })
-
+    if valid:
         # Save the user's form data to the database.
         user = User.objects.create_user(email, email, password)
         user.first_name = first_name
@@ -156,7 +148,7 @@ def signup(request):
                               key_expires=key_expires)
 
         profile.save()
-        link = "%s://%s/activate/%s/"%(settings.HTTP_PROTOCOL, settings.SITE_URL, activation_key)
+        link = "%s/activate/%s/"%(site_url, activation_key)
         subject = "Activation link from %s!"%settings.BRAND_NAME
 
         txt_message = u'''Hey there {0:s},
@@ -194,16 +186,29 @@ def signup(request):
         #send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=True)
         # Update our variable to tell the template registration was successful.
 
-        message = u'''New account created successfully. You'll receive your activation link in
-                            {0:s}. You must activate you account before you can start Konecting...'''.format(html.escape(user.email))
+        error_message = [u'''New account created successfully. You'll receive your activation link in
+                    {0:s}. You must activate you account before you can start Konecting...'''.format(html.escape(user.email))]
+
         return render(request,
                       'main/message.html',
-                      {'domain': settings.SITE_URL,
+                      {'brand_name:': settings.BRAND_NAME,
+                       'site_url': site_url,
                        'message_type': 'success',
-                       'message': message,
+                       'message': ' '.join(error_message),
                        })
+
     else:
-        return render_to_response('main/signup.html', {'has_account:': False}, RequestContext(request))
+        template = 'main/signup.html'
+        return render(request,
+                      template,
+                      {'brand_name:': settings.BRAND_NAME,
+                       'site_url': site_url,
+                       'error_message': ' '.join(error_message),
+                       'first_name': first_name,
+                       'last_name': last_name,
+                       'email': email,
+                       'password': password,
+                       })
 
 
 @login_required
@@ -219,6 +224,7 @@ def logout(request):
 def activate(request, activation_key):
     message = ''
     message_type = 'error'
+    site_url = utility.get_site_url(request)
     if request.user.is_authenticated():
         # user already has an account and is authenticated; don't let them register again
         message = u'You are logged in as {0:s}. If you want to activate another account, <a class="btn btn-success" ' \
@@ -228,7 +234,7 @@ def activate(request, activation_key):
     #user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
     user_profile = list(UserProfile.objects.filter(Q(activation_key=activation_key))[:1])
     if not user_profile:
-        message = u'Sorry, but the activation code is invalid. Please request <a class="btn btn-success" '\
+        message = u'Sorry, but the activation code is invalid. Please request <a class="btn btn-success" ' \
                   u'href="/activationlink/">New Activation Link</a> to activate your account. Thank you!'
         message_type = 'error'
     else:
@@ -245,13 +251,14 @@ def activate(request, activation_key):
                           u'href="/login/">Login</a> to your account.'
                 message_type = 'success'
             else:
-                message = u'Sorry, but the activation code is expired. Please request <a class="btn btn-success" '\
+                message = u'Sorry, but the activation code is expired. Please request <a class="btn btn-success" ' \
                           u'href="/activationlink/">New Activation Link</a> to activate your account. Thank you!'
                 message_type = 'error'
 
     return render(request,
                   'main/message.html',
-                  {'domain': settings.SITE_URL,
+                  {'brand_name': settings.BRAND_NAME,
+                   'site_url': site_url,
                    'message_type': message_type,
                    'message': message,
                    })

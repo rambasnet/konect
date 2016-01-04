@@ -2,6 +2,7 @@
 {% block title %}Konect | Signup{% endblock title %}
 
 {% block site_link %}{{ site_url |safe }}{% endblock site_link %}
+{% block brand %}{{ brand_name }}{% endblock brand %}
 
 {% block content %}
     <div class="container">
@@ -14,7 +15,7 @@
                     <div class="alert alert-danger fade in form-group center" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        {{ error_message }}
+                        {{ error_message|safe }}
                     </div>
                 {% endif %}
                 <form class="form form-inline" role="form" action="{% url 'main:signup' %}" method="post">
