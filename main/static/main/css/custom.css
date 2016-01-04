@@ -46,10 +46,20 @@ a:link, a:visited, a:hover, a:active
 	background-color: #f8f8f8;
 	border-radius: 5px;
 	text-align: center;
-	padding: 5px 0;
+	padding: 10px 10px;
 }
 
-form label
+table.form
+{
+	width: 100%;
+}
+
+table.form tr
+{
+	padding-bottom: 5px;
+}
+
+table.form td
 {
 	text-align: left;
 }
@@ -69,7 +79,7 @@ form label
 
 /* vertical align label */
 .form-inline label {
-    line-height: 34px;
+    line-height: 44px;
 }
 
 /* force inline control to fit container width
