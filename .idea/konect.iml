@@ -23,6 +23,7 @@
       <list>
         <option value="$MODULE_DIR$/main/templates" />
         <option value="$MODULE_DIR$/account/templates" />
+        <option value="$MODULE_DIR$/eprofile/templates" />
       </list>
     </option>
   </component>

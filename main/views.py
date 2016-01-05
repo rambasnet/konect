@@ -24,7 +24,7 @@ def index(request):
     site_url = utility.get_site_url(request)
     if request.user.is_authenticated():
         return render(request,
-                      'main/profile.html',
+                      'main/../eprofile/templates/eprofile/profile.html',
                       dict())
     else:
         return render(request,
@@ -271,4 +271,4 @@ def activate(request, activation_key):
 
 @login_required
 def profile(request):
-    return render(request, 'main/profile.html', {})
+    return render(request, 'main/../eprofile/templates/eprofile/profile.html', {})

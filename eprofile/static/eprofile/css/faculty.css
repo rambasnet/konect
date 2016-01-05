@@ -1,0 +1,242 @@
+body{
+    background-color: #E9E8E8 !important;
+}
+
+#mainContainer
+{
+    margin-left:auto;
+ 	margin-right:auto;
+    width:900px !important;
+}
+
+div.cover
+{
+    /* Fix the top banner thing above this banner, on small width screens this 5em is needed to maintain profile visability
+    margin-top: 5em;*/
+    height: 300px;
+    background: white url("img/banner.jpg") no-repeat;
+    width:900px;
+    background-size: cover;
+    display: inline-block;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.profilePhoto
+{
+    height:200px;
+    width:200px;
+    border-radius:5px;
+    border: 1px solid #DCDCDC;
+    position: absolute;
+    top: 140px;
+    left: 20px;
+    z-index: 1;
+}
+
+div.profileInfo
+{
+    height: 160px;
+    width: 450px;
+    opacity: .7;
+    background-color: white;
+    position: absolute;
+    left: 230px;
+    top: 140px;
+    color: black;
+    padding-left: 5px;
+    padding-top:0px;
+}
+
+div.conextStats
+{
+    height: 160px;
+    width: 200px;
+    opacity: .7;
+    background-color: white;
+    position: absolute;
+    left: 690px;
+    top: 140px;
+    color: black;
+    padding-left: 5px;
+    padding-top:0px;
+}
+
+p.contact
+{
+    margin: 5px;
+}
+
+.title
+{
+    margin: 5px;
+    font-size: 20px;
+}
+
+.subtitle
+{
+    margin: 5px;
+    font-size: 16px;
+}
+
+div.banner p
+{
+    margin-top: 0em;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+div.tabContainer
+{
+    height: auto;
+    width: 900px;
+    background-color: white;
+    position: relative;
+    color: black;
+    padding-top:0px;
+    margin: 0px;
+    /*z-index: -2;*/
+}
+
+div.tabContentContainer
+{
+    height: auto;
+    width: 680px;
+    position: relative;
+    color: black;
+    padding-top:0px;
+    margin: 0px;
+}
+
+.tabs
+{
+    position: relative;
+    left: 220px;
+    z-index: 2;
+    width: 900px;
+}
+
+div.section
+{
+    background-color: white;
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.endorseForm
+{
+    float: left;
+}
+
+div.alerts
+{
+    width: 100%;
+}
+
+div.banner > .summary
+{
+    float: left;
+    margin-left: 2.5%;
+    margin-top: 5%;
+    background-color: dimgrey;
+    color: lightgrey;
+}
+
+div.banner > .summary > img
+{
+    height: 11em;
+    width: 11em;
+    float: left;
+    padding-left: 0em;
+    /*padding-right: 0.5em;*/
+    padding-bottom: 0em;
+}
+
+div.banner > .summary > .left
+{
+    float: left;
+    margin-left: 1em;
+}
+
+div.banner > .summary > .right
+{
+    float: right;
+    margin-left: 5em;
+}
+
+div.banner > .stats
+{
+    float: left;
+    clear: left;/* Used to align this in the row under the main profile*/
+    margin-left: 2%;
+    margin-top: 2%;
+    width: 54%;
+    height: 5%;
+}
+
+div.banner > .stats > .vouch
+{
+	float: left;
+	height: 5%;
+	width:10%;
+    padidng-left: 5%;
+    padding-right: 5%;
+}
+
+div.banner > .stats > .vouch > img
+{
+	padding-left: 0.5em;
+	width: 5%;
+	height: 5%;
+}
+
+div.banner > .stats > .vouch >.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+div.banner > .stats > .vouch > .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+div.alerts
+{
+    float: right;
+    width: 30%;
+    /*border-radius: 0.5em;*/
+    margin: 0.5em;
+}
+
+
+div.alerts > img
+{
+
+    float: right;
+}
+
+.officeHour
+{
+    background:#D0F5A9;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.schedule
+{
+    background:#FAFFFA;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.card
+{
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    padding: 5px;
+}
