@@ -1,8 +1,7 @@
 import hashlib, uuid, datetime
 
-from django.utils import timezone
-from django.shortcuts import render, render_to_response, \
-    RequestContext, HttpResponseRedirect, get_object_or_404
+from django.utils import timezone, html
+from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -13,23 +12,26 @@ from django.conf import settings
 from django.core import validators
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-from django.utils import html
-from django.template import RequestContext
 
-from main.forms import SignupForm
 from main.models import UserProfile
 from main import utility
+
+
 # Create your views here.
 
 
 def index(request):
     site_url = utility.get_site_url(request)
-    print('brand name = ', settings.BRAND_NAME)
-    return render(request,
-                  'main/index.html',
-                  {
-                    'site_url': site_url,
-                  })
+    if request.user.is_authenticated():
+        return render(request,
+                      'main/profile.html',
+                      dict())
+    else:
+        return render(request,
+                      'main/login_signup.html',
+                      {
+                          'site_url': site_url,
+                      })
 
 
 def user_login(request):
@@ -73,14 +75,11 @@ def user_login(request):
         return render(request,
                       'main/login.html',
                       {
-                       'site_url': site_url,
-                       })
+                          'site_url': site_url,
+                      })
 
 
 def signup(request):
-    # A boolean value for telling the template whether the registration was successful.
-    # Set to False initially. Code changes value to True when registration succeeds.
-    error_message = []
     site_url = utility.get_site_url(request)
 
     valid = False
@@ -125,9 +124,9 @@ def signup(request):
     else:
         return render(request,
                       'main/signup.html',
-                        {
-                         'site_url':site_url,
-                         })
+                      {
+                          'site_url': site_url,
+                      })
 
     if valid:
         # Save the user's form data to the database.
@@ -148,26 +147,35 @@ def signup(request):
                               key_expires=key_expires)
 
         profile.save()
-        link = "%s/activate/%s/"%(site_url, activation_key)
-        subject = "Activation link from %s!"%settings.BRAND_NAME
+        link = "%s/activate/%s/" % (site_url, activation_key)
+        subject = "Activation link from %s!" % settings.BRAND_NAME
 
         txt_message = u'''Hey there {0:s},
+
                     Thank your for your interest. You're off to a great start!
 
-                    To activate your account, please copy and paste this link to your browser and follow the instruction:
-                    {2:s}
+                    To activate your  account, please copy/paste and load the following link to your browser
+                    and follow the instruction.  Please note that activation link will expire in 48 hours.
+                    If you didn't register for an account, you can safely ignore this email.
+
+                    {1:s}.
 
                     Happy Konecting...
 
                     Best,
                     Knoect Account Team
-                    '''.format(user.first_name, link, link)
+                    '''.format(user.first_name, link)
 
         html_message = '''Hey there {0:s}, <br /><br />
-                    Thank your for your interest. You're off to a great start!<br />
-                    <br>
-                    Please click this link <a href="{1:s}" target="_blank">{2:s}</a>
-                    to activate your new account.<br /><br />
+
+                    Thank your for your interest. You're off to a great start!<br /><br />
+
+                    To activate your new account, please click on the following link.
+                    Please note that activation link will expire in 48 hours. If you didn't register for an account,
+                    you can safely ignore this email.<br /><br />
+
+                    <a href="{1:s}" target="_blank">{2:s}</a>
+                    <br /><br />
 
                     If clicking on the link doesn't work, please copy paste it to
                     your browser. <br /><br />
@@ -183,32 +191,33 @@ def signup(request):
         msg = mail.EmailMultiAlternatives(subject, txt_message, from_email, to_list)
         msg.attach_alternative(html_message, "text/html")
         msg.send()
-        #send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=True)
+        # send_mail(subject, message, from_email, to_list, html_message=html_message, fail_silently=True)
         # Update our variable to tell the template registration was successful.
 
         error_message = [u'''New account created successfully. You'll receive your activation link in
-                    {0:s}. You must activate you account before you can start Konecting...'''.format(html.escape(user.email))]
+                    {0:s}. You must activate you account before you can start Konecting...'''.format(
+            html.escape(user.email))]
 
         return render(request,
                       'main/message.html',
                       {
-                       'site_url': site_url,
-                       'message_type': 'success',
-                       'message': ' '.join(error_message),
-                       })
+                          'site_url': site_url,
+                          'message_type': 'success',
+                          'message': ' '.join(error_message),
+                      })
 
     else:
         template = 'main/signup.html'
         return render(request,
                       template,
                       {
-                       'site_url': site_url,
-                       'error_message': ' '.join(error_message),
-                       'first_name': first_name,
-                       'last_name': last_name,
-                       'email': email,
-                       'password': password,
-                       })
+                          'site_url': site_url,
+                          'error_message': ' '.join(error_message),
+                          'first_name': first_name,
+                          'last_name': last_name,
+                          'email': email,
+                          'password': password,
+                      })
 
 
 def logout(request):
@@ -223,46 +232,43 @@ def activate(request, activation_key):
     if request.user.is_authenticated():
         # user already has an account and is authenticated; don't let them register again
         message = u'You are logged in as {0:s}. If you want to activate another account, <a class="btn btn-success" ' \
-                  u'href="/logout/">Logout</a> first and click on the link again.'.format(html.escape(request.user.email))
+                  u'href="/logout/">Logout</a> first and click on the link again.'.format(
+            html.escape(request.user.email))
         message_type = 'info'
 
-    #user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
-    user_profile = list(UserProfile.objects.filter(Q(activation_key=activation_key))[:1])
-    if not user_profile:
-        message = u'Sorry, but the activation code is invalid. Please request <a class="btn btn-success" ' \
-                  u'href="/activationlink/">New Activation Link</a> to activate your account. Thank you!'
-        message_type = 'error'
-    else:
-        user = user_profile[0].user
-        if user.is_active:
-            message = u'Account associated with this activation code is active. You can <a class="btn btn-success" ' \
-                      u'href="/login/">Login</a> to your account.'
-            message_type = 'info'
+    else:  # user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+        user_profile = list(UserProfile.objects.filter(Q(activation_key=activation_key))[:1])
+        if not user_profile:
+            message = u'Sorry, but the activation code is invalid. Please request <a class="btn btn-success" ' \
+                      u'href="account/recover/">New Activation Link</a> to activate your account. Thank you!'
+            message_type = 'error'
         else:
-            if timezone.now() < user_profile.key_expires:
-                user.is_active = True
-                user.save()
-                message = u'Thanks for activating your account. You can now <a class="btn btn-success" ' \
+            user = user_profile[0].user
+            if user.is_active:
+                message = u'Account associated with this activation code is active. You can <a class="btn btn-success" ' \
                           u'href="/login/">Login</a> to your account.'
-                message_type = 'success'
+                message_type = 'info'
             else:
-                message = u'Sorry, but the activation code is expired. Please request <a class="btn btn-success" ' \
-                          u'href="/activationlink/">New Activation Link</a> to activate your account. Thank you!'
-                message_type = 'error'
+                if timezone.now() < user_profile.key_expires:
+                    user.is_active = True
+                    user.save()
+                    message = u'Thanks for activating your account. You can now <a class="btn btn-success" ' \
+                              u'href="/login/">Login</a> to your account.'
+                    message_type = 'success'
+                else:
+                    message = u'The activation code has expired. Please request <a class="btn btn-success" ' \
+                              u'href="/activationlink/">New Activation Link</a> to activate your account. Thank you!'
+                    message_type = 'error'
 
     return render(request,
                   'main/message.html',
                   {
-                   'site_url': site_url,
-                   'message_type': message_type,
-                   'message': message,
-                   })
+                      'site_url': site_url,
+                      'message_type': message_type,
+                      'message': message,
+                  })
 
 
 @login_required
 def profile(request):
     return render(request, 'main/profile.html', {})
-
-
-def recover(request):
-    return render(request, 'main/recover.html', {})

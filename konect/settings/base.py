@@ -43,9 +43,10 @@ PREREQ_APPS = [
 #APP specific apps go in this list
 PROJECT_APPS = [
     'main',
+    'account',
 ]
 
-INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
+INSTALLED_APPS = PROJECT_APPS + PREREQ_APPS
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

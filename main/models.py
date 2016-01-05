@@ -1,4 +1,6 @@
+import datetime
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -8,7 +10,7 @@ class UserProfile(models.Model):
     activation_key = models.CharField(max_length=128)
     key_expires = models.DateTimeField(null=True)
     #used to track language preference when we implement it
-    local = models.CharField(max_length=10, null= True)
+    locale = models.CharField(max_length=10, null= True)
     #Holds a profile picture on our site
     profile_picture = models.CharField(max_length=256, null=True)
     #Holds their current posiiton e.g. faculty, student, data analyst
@@ -24,3 +26,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.email
+

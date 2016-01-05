@@ -11,5 +11,4 @@ urlpatterns = [
     url(r'^logout/', views.logout, name='logout'),
     url(r'^activate/(.*)/$', views.activate, name='activate'),
     url(r'^profile/', views.profile, name='profile'),
-    url(r'^recover/', views.recover, name='recover')
 ]

@@ -2,95 +2,71 @@
  * Globals
  */
 
-
 body {
-	padding-top: 50px;
-  	padding-bottom: 20px;
-	height: 100%;
-	background-color:gainsboro;
-	color: #000;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    height: 100%;
+    background-color: gainsboro;
+    color: #000;
 }
 
-.navbar-brand
-{
-	font-size: 2em;
+.navbar-brand {
+    font-size: 2em;
 }
 
-#main
-{
+#main {
 
 }
 
-footer
-{
-	position: absolute;
-	bottom:0px;
-	background-color: white;
-	left:0px;
-	width: 100%;
-	padding: 10px;
-	margin-top: 50px;
+footer {
+    position: absolute;
+    bottom: 0px;
+    background-color: white;
+    left: 0px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 50px;
 }
 
-a:link, a:visited, a:hover, a:active
-{
-	color: dimgray;
+a:link, a:visited, a:hover, a:active {
+    color: dimgray;
 }
 
-#signup, #login
-{
-	margin-top: 50px;
-	width: 500px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #f8f8f8;
-	border-radius: 5px;
-	text-align: center;
-	padding: 10px 10px;
+#form_container, #login {
+    margin-top: 50px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 10px;
 }
 
-table.form
-{
-	width: 100%;
+table.form {
+    width: 100%;
 }
 
-table.form tr
-{
-	padding-bottom: 5px;
+table.form tr td {
+    padding-bottom: 10px;
 }
 
-table.form td
-{
-	text-align: left;
+table.form td {
+    text-align: left;
 }
 
-.center
-{
-	width:95%;
-	display:inline-block;
-	text-align: center;"
-}
-
-/* get a larger input, and align it with submit button */
-.form-inline .form-group > div.col-xs-8 {
-    padding-left: 0;
-    padding-right: 0;
+.center {
+    width: 95%;
+    display: inline-block;
+    text-align: center;
 }
 
 /* vertical align label */
 .form-inline label {
-    line-height: 44px;
+    line-height: 34px;
 }
 
-/* force inline control to fit container width
- http://getbootstrap.com/css/#forms-inline
-*/
 .form-inline .form-control {
     width: 100%;
 }
-/* Reset margin-bottom for our multiline form */
-@media (min-width: 768px) {
-  .form-inline .form-group {
-    margin-bottom: 15px;
-  }
-}
+

@@ -29,10 +29,9 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('main.urls')),
+    url(r'^account/', include('account.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)
-
-    #print('static url', settings.STATIC_URL)
