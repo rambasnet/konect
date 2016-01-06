@@ -1,4 +1,8 @@
 # utility functions
+import time
+
+
+current_milliseconds = lambda: int(round(time.time()*1000))
 
 
 def get_protocol(request):
@@ -11,3 +15,7 @@ def get_protocol(request):
 def get_site_url(request):
     site_url = u'{0:s}://{1:s}'.format(get_protocol(request), request.get_host())
     return site_url
+
+
+def user_media_path(request):
+    path = u'img/{0}/{1}/'.format(request.user.id, current_milliseconds())

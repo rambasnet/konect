@@ -18,7 +18,8 @@
               integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
               crossorigin="anonymous">
         <!-- Custom CSS -->
-        <link href="{% static 'eprofile/css/custom.css' %}" rel="stylesheet" />
+        <link href="{% static 'eprofile/css/base.css' %}" rel="stylesheet" />
+        <link href="{% static 'eprofile/css/profile.css' %}" rel="stylesheet" />
     {% endblock stylesheets %}
     <!-- other head contents such as css -->
     {% block head_extra %} {% endblock head_extra %}
@@ -26,14 +27,15 @@
 
 <body>
 <!-- main navigation bar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="{% block site_link %}{% endblock site_link %}">{% brand_name %}</a>
         </div>
-        {% block nav_extra %}{% endblock nav_extra %}
+        {% block header_extra %}{% endblock header_extra %}
     </div>
-</nav>
+</header>
+{% block navigation %}{% endblock navigation %}
 <!-- main content of the page -->
 <div id="main" role="main">
     <div class="container">
@@ -42,7 +44,7 @@
 </div>
 
 <footer>
-    {% include 'main/_footer.html' %}
+    {% include 'eprofile/_footer.html' %}
     {% block footer_extra %}{% endblock footer_extra %}
 </footer>
 {% block javascript %}

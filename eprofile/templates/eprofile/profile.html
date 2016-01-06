@@ -2,7 +2,12 @@
 {% block title %}{{ block.super }} | Profile{% endblock title %}
 
 {% block domain %}{{ domain |safe }}{% endblock domain %}
-
+{% block header_extra %}
+    {% include 'eprofile/_header.html' %}
+{% endblock header_extra %}
+{% block navigation %}
+{% endblock navigation %}
 {% block content %}
-<h1>Welcome to your profile!</h1>
+    {% include 'eprofile/_banner.html' %}
+    <h1>Welcome to your profile!</h1>
 {% endblock content %}

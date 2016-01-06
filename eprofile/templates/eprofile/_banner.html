@@ -1,0 +1,91 @@
+{% load staticfiles %}
+
+<div class="bannerContainer">
+    <a href="{% url 'profile:update_cover_photo' %}">
+        <div class="cover" style="background-image: url({% static 'eprofile/img/faculty_banner.jpg' %});"
+             data-toggle="tooltip" title="Cover Photo">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true" style="margin:20px; font-size:20px; color:white;"
+                  data-toggle="tooltip" title="Change Cover Photo"></span>
+        </div>
+    </a>
+    <div class="profilePhotoContainer">
+        <a href="{% url 'profile:update_profile_photo' %}">
+        <div class="profilePhoto" style="background-image: url({% static 'eprofile/img/ram_basnet.jpg' %});"
+             data-toggle="tooltip" title="Profile Photo">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true" style="position:relative; left:10px; bottom:10px; font-size:20px; color:white;"
+                  data-toggle="tooltip" title="Change Profile Photo"></span>
+        </div>
+        </a>
+    </div>
+    <!-- empty div needed to counter the transparency effect of the background -->
+    <div class="vCardContainer"></div>
+    <div class="vCard">
+        <h2 class="title">Ram B. Basnet, PhD, CEH <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+        </h2>
+        <h3 class="subtitle">Assistant Professor, Computer Science</h3>
+        <h4 class="subtitle">Colorado Mesa University</h4>
+        <h4 class="subtitle">Grand Junction, CO 81507</h4>
+        <table class="vCardContact">
+            <tr>
+                <td><span class="glyphicon glyphicon-envelope" data-toggle="tooltip" title="Email"
+                          aria-hidden="true"></span></td>
+                <td><a href="mailto: {{ user.email }}"> {{ user.email }}</a></td>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="glyphicon glyphicon-phone-alt" aria-hidden="true" data-toggle="tooltip"
+                          title="Phone"></span></td>
+                <td><a href="tel:970-248-1682">970-248-1682</a></td>
+            </tr>
+            <tr>
+                <td><img src="{% static 'eprofile/img/icons/office.png' %}" width="20" data-toggle="tooltip"
+                         title="Office"/></td>
+                <td>WS 119B</td>
+            </tr>
+        </table>
+    </div>
+    <div class="statsContainer"></div>
+    <div class="conextStats">
+        <h2 class="subtitle">Conextions</h2>
+        <a href="http://conext.rocks/facultyconext/"><span
+                aria-label="Faculty"><span class="glyphicon glyphicon-education"
+                                           aria-hidden="true"></span>4</span></a>
+        <br>
+        <a href="/peerconext/"><span aria-label="Peers"> <span class="glyphicon glyphicon-apple"
+                                                               aria-hidden="true"></span>3</span></a>
+        <br>
+        <a href="alumniconext"> <span aria-label="Alumni"><span class="glyphicon glyphicon-globe"
+                                                                aria-hidden="true"></span>2</span></a>
+        <br>
+        <h2 class="subtitle">Profile Strength</h2>
+        <span aria-label="Profile Strength"><img src="{% static 'eprofile/img/icons/profileStrength.png' %}"
+                                                 alt="Profile Strength" width="30"> Associate Professor</span>
+    </div>
+
+</div>
+
+<div class="tabContainer">
+    <div class="tabs">
+        <ul class="nav nav-tabs">
+            <li class="nav active">
+                <a href="#Timeline" data-toggle="tab">Timeline</a>
+            </li>
+            <li class="nav">
+                <a href="#About" data-toggle="tab">About</a>
+            </li>
+            <li class="nav">
+                <a href="#Teaching" data-toggle="tab">Teaching</a>
+            </li>
+            <li class="nav">
+                <a href="#Research" data-toggle="tab">Research</a>
+            </li>
+            <li class="nav">
+                <a href="#Service" data-toggle="tab">Service</a>
+            </li>
+            <li class="nav">
+                <a href="#Personal" data-toggle="tab">Personal</a>
+            </li>
+
+        </ul>
+    </div>
+</div>

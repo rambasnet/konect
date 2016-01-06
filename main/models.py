@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     locale = models.CharField(max_length=10, null= True)
     #Holds a profile picture on our site
     profile_picture = models.CharField(max_length=256, null=True)
-    #Holds their current posiiton e.g. faculty, student, data analyst
+    # Holds their current position e.g. faculty, student, data analyst
     current_title = models.CharField(max_length=100, null=True)
     #This holds the users publicly shared email, after all they may not want to publicise their personal emailmodels
     public_email = models.CharField(max_length=256, null=True)
