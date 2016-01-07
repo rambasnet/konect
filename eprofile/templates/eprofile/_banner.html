@@ -2,17 +2,23 @@
 
 <div class="bannerContainer">
     <a href="{% url 'profile:update_cover_photo' %}">
-        <div class="cover" style="background-image: url({% static 'eprofile/img/faculty_banner.jpg' %});"
+        <div class="cover"
+             {% if user_profile.cover_photo %}
+                style="background-image: url({{ MEDIA_URL }}{{ user_profile.cover_photo }});"
+             {% endif %}
              data-toggle="tooltip" title="Cover Photo">
-            <span class="glyphicon glyphicon-camera" aria-hidden="true" style="margin:20px; font-size:20px; color:white;"
+            <span class="glyphicon glyphicon-camera coverCameraPosition" aria-hidden="true"
                   data-toggle="tooltip" title="Change Cover Photo"></span>
         </div>
     </a>
     <div class="profilePhotoContainer">
         <a href="{% url 'profile:update_profile_photo' %}">
-        <div class="profilePhoto" style="background-image: url({% static 'eprofile/img/ram_basnet.jpg' %});"
+        <div class="profilePhoto"
+             {% if user_profile.profile_photo %}
+                style="background-image: url({{ MEDIA_URL }}{{ user_profile.profile_photo }});"
+             {% endif %}
              data-toggle="tooltip" title="Profile Photo">
-            <span class="glyphicon glyphicon-camera" aria-hidden="true" style="position:relative; left:10px; bottom:10px; font-size:20px; color:white;"
+            <span class="glyphicon glyphicon-camera profileCameraPosition" aria-hidden="true"
                   data-toggle="tooltip" title="Change Profile Photo"></span>
         </div>
         </a>
@@ -20,9 +26,13 @@
     <!-- empty div needed to counter the transparency effect of the background -->
     <div class="vCardContainer"></div>
     <div class="vCard">
-        <h2 class="title">Ram B. Basnet, PhD, CEH <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+        <a href="{% url 'profile:update_card' %}"><div class="editCardContainer">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Edit Card Info"></span>
+        </div>
+            </a>
+        <h2 class="title">{{ user_profile.card_name }} <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
         </h2>
-        <h3 class="subtitle">Assistant Professor, Computer Science</h3>
+        <h3 class="subtitle">{{ user_profile.card_title }}, Computer Science</h3>
         <h4 class="subtitle">Colorado Mesa University</h4>
         <h4 class="subtitle">Grand Junction, CO 81507</h4>
         <table class="vCardContact">
@@ -66,7 +76,7 @@
 
 <div class="tabContainer">
     <div class="tabs">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-pills">
             <li class="nav active">
                 <a href="#Timeline" data-toggle="tab">Timeline</a>
             </li>

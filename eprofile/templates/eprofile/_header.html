@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div id="navbar">
     <form class="navbar-form navbar-left" role="search">
         <div class="input-group bannerSearch">
@@ -10,11 +11,21 @@
         </div>
     </form>
     <ul class="nav navbar-nav navbar-right">
-        <li><a class="dropdown-toggle btn-lg" data-toggle="dropdown" role="button"
-               aria-expanded="false" href="{% url 'profile:profile' %}">{{ user.first_name }} <span class="caret"></span></a>
+        <li><a class="dropdown-toggle btn-lg" data-toggle="dropdown" role="button" aria-expanded="false"><span
+                class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="/profile/edit/">Edit Profile</a></li>
             </ul>
+        </li>
+        <li>
+            <a href="{% url 'profile:profile' %}"><img src="
+                {% if user_profile.profile_photo %}
+                    {{ MEDIA_URL }}{{ user_profile.profile_photo }}
+                {% else %}
+                    {% static 'eprofile/img/profile.png' %}
+                {% endif %}"
+                                                       style="width:20px; padding-right:5px;"/>{{ user_profile.user.first_name }}
+            </a>
         </li>
         <li><a href="/">Home</a></li>
         <li><a class="btn-lg" href="#"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
@@ -25,11 +36,11 @@
                aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span
                     class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">{{ user.email }}</a></li>
+                <li><a href="#">{{ user_profile.user.username }}</a></li>
                 <li><a href="#">Settings</a></li>
                 <li class="divider"></li>
-                <li><a href="{% url 'main:logout' %}"><span class="glyphicon glyphicon-log-out"
-                                                            aria-hidden="true"></span> Log out</a></li>
+                <li><a href="{% url 'account:logout' %}"><span class="glyphicon glyphicon-log-out"
+                                                               aria-hidden="true"></span> Log out</a></li>
             </ul>
         </li>
     </ul>

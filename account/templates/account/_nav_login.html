@@ -1,5 +1,5 @@
 <div id="navbar">
-    <form class="navbar-form navbar-right" action={% url "main:login" %} method="post">
+    <form class="navbar-form navbar-right" action={% url "account:login" %} method="post">
         {% csrf_token %}
         <div class="form-group">
             <input type="text" placeholder="Email" name="username" id="username" class="form-control" required>

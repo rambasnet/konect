@@ -21,9 +21,9 @@ body {
     display: inline-block;
 }
 
-.cover{
+.cover {
     height: 300px;
-    background: white url("img/banner.jpg") no-repeat;
+    background: white url("/static/eprofile/img/banner.jpg") no-repeat;
     width: 900px;
     background-size: cover;
     position: absolute;
@@ -32,16 +32,18 @@ body {
     margin-left: auto;
     margin-right: auto;
     display: inline-block;
-    border: 1px solid gray;
+    border-top: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
 }
 
 div.profilePhotoContainer {
     height: 200px;
     width: 200px;
     border-radius: 5px;
-    border: 1px solid dimgray;
+    border: 1px solid #d9d9d9;
     position: absolute;
-    top: 140px;
+    top: 135px;
     left: 20px;
     z-index: 1;
     background-color: white;
@@ -51,24 +53,24 @@ div.profilePhotoContainer {
 .profilePhoto {
     width: 100%;
     height: 100%;
-    background: midnightblue url("img/ram_basnet.jpg") no-repeat;
+    background: midnightblue url("/static/eprofile/img/profile.png") no-repeat;
     background-size: cover;
 }
 
 div.vCardContainer {
-    height: 160px;
+    height: 165px;
     width: 450px;
     opacity: .7;
     background-color: white;
     position: absolute;
     left: 230px;
-    top: 140px;
+    top: 135px;
     color: black;
     padding-left: 5px;
-    padding-top: 0px;
-         border-top: 1px solid gray;
-      border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    padding-top: 0;
+    border-top: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
 }
 
 div.vCard {
@@ -77,22 +79,24 @@ div.vCard {
     color: black;
     left: 230px;
     padding-left: 5px;
-    padding-top: 0px;
+    padding-top: 0;
+    width: 450px;
+    height: 165px;
 }
 
 div.statsContainer {
-    height: 160px;
+    height: 165px;
     width: 200px;
     opacity: .7;
     background-color: white;
     position: absolute;
     left: 690px;
-    top: 140px;
+    top: 135px;
     padding-left: 5px;
-    padding-top: 0px;
-     border-top: 1px solid gray;
-      border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    padding-top: 0;
+    border-top: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
 }
 
 div.conextStats {
@@ -103,11 +107,10 @@ div.conextStats {
     top: 140px;
     color: black;
     padding-left: 5px;
-    padding-top: 0px;
+    padding-top: 0;
 }
 
-table.vCardContact
-{
+table.vCardContact {
     width: 100%;
     margin-left: 5px;
 }
@@ -127,7 +130,7 @@ p.contact {
 }
 
 div.banner p {
-    margin-top: 0em;
+    margin-top: 0;
     margin-bottom: 0;
     font-size: 14px;
 }
@@ -137,11 +140,11 @@ div.tabContainer {
     width: 900px;
     background-color: white;
     color: black;
-    padding-top: 0px;
-    margin: 0px;
-         border-bottom: 1px solid gray;
-      border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    padding-top: 0;
+    margin: 0;
+    border-bottom: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     /*z-index: -2;*/
@@ -154,23 +157,22 @@ div.bannerSearch {
 div.tabContentContainer {
     height: auto;
     width: 680px;
-    position: relative;
     color: black;
-    padding-top: 0px;
-    margin: 0px;
+    padding-top: 0;
+    margin: 0;
 }
 
 .tabs {
     position: relative;
     left: 230px;
     z-index: 2;
-    width: 900px;
+    width: 670px;
 }
 
 div.section {
     background-color: white;
-    border-bottom: 1px solid gainsboro;
-    border-right: 1px solid gainsboro;
+    border-bottom: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
     margin-top: 5px;
     padding: 10px;
 }
@@ -183,74 +185,11 @@ div.alerts {
     width: 100%;
 }
 
-div.banner > .summary {
-    float: left;
-    margin-left: 2.5%;
-    margin-top: 5%;
-    background-color: dimgrey;
-    color: lightgrey;
-}
-
-div.banner > .summary > img {
-    height: 11em;
-    width: 11em;
-    float: left;
-    padding-left: 0em;
-    /*padding-right: 0.5em;*/
-    padding-bottom: 0em;
-}
-
-div.banner > .summary > .left {
-    float: left;
-    margin-left: 1em;
-}
-
-div.banner > .summary > .right {
-    float: right;
-    margin-left: 5em;
-}
-
-div.banner > .stats {
-    float: left;
-    clear: left; /* Used to align this in the row under the main profile*/
-    margin-left: 2%;
-    margin-top: 2%;
-    width: 54%;
-    height: 5%;
-}
-
-div.banner > .stats > .vouch {
-    float: left;
-    height: 5%;
-    width: 10%;
-    paddidng-left: 5%;
-    padding-right: 5%;
-}
-
-div.banner > .stats > .vouch > img {
-    padding-left: 0.5em;
-    width: 5%;
-    height: 5%;
-}
-
-div.banner > .stats > .vouch > .dropdown-menu li:hover .sub-menu {
-    visibility: visible;
-}
-
-div.banner > .stats > .vouch > .dropdown:hover .dropdown-menu {
-    display: block;
-}
-
 div.alerts {
     float: right;
     width: 30%;
     /*border-radius: 0.5em;*/
     margin: 0.5em;
-}
-
-div.alerts > img {
-
-    float: right;
 }
 
 .officeHour {
@@ -265,15 +204,36 @@ div.alerts > img {
     text-align: center;
 }
 
-.card {
-    float: left;
+.dropdown-menu {
     width: 200px;
-    height: 200px;
-    margin: 5px;
-    padding: 5px;
 }
 
-.dropdown-menu
+.nav-tabs {
+    border-bottom: 0 solid #d9d9d9;
+}
+
+.editCardContainer {
+    position: absolute;
+    font-size: 20px;
+    right: 10px;
+    display: none;
+}
+
+.vCard:hover .editCardContainer
 {
-    width: 200px;
+    display: block;
+}
+
+.profileCameraPosition {
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    font-size:20px;
+    color:white;
+}
+
+.coverCameraPosition {
+    margin:20px;
+    font-size:20px;
+    color:white;
 }

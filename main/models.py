@@ -3,7 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-# Create your models here.
+
+# Create your models here... do not use this UserProfile...user Profile Model
 class UserProfile(models.Model):
     #foreign key to tie this info to the user
     user = models.OneToOneField(User)
@@ -23,6 +24,7 @@ class UserProfile(models.Model):
     tagline=models.CharField(max_length=100, null=True)
     #phoneNumber
     phone = models.CharField(max_length=30, null=True)
+
 
     def __str__(self):
         return self.user.email

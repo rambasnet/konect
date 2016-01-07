@@ -13,3 +13,14 @@ class Recovery(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+# Model for account activation
+class Activation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activation_key = models.CharField(max_length=128)
+    key_expires = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.user.email
+

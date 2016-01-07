@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^edit/$', views.edit_profile, name='edit_profile'),
     url(r'^update_cover_photo/$', views.update_cover_photo, name='update_cover_photo'),
     url(r'^update_profile_photo/$', views.update_profile_photo, name='update_profile_photo'),
+    url(r'^update_card/$', views.update_card, name='update_card'),
 ]

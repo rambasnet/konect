@@ -1,0 +1,48 @@
+{% extends "eprofile/__base.html" %}
+{% block title %}{{ block.super }} | Images{% endblock title %}
+
+{% block domain %}{{ domain |safe }}{% endblock domain %}
+{% block header_extra %}
+    {% include 'eprofile/_header.html' %}
+{% endblock header_extra %}
+{% block navigation %}
+{% endblock navigation %}
+{% block content %}
+    <div id="form_container">
+        <h3>{{ form_heading }}</h3>
+        {% if instruction %}
+            <div class="alert alert-info">{{ instruction }}</div>
+        {% endif %}
+        <hr>
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger fade in form-group center" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{ form.non_field_errors |safe }}
+            </div>
+        {% endif %}
+        <form class="form form-inline" role="form" action="{{ action }}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="form">
+                {% if form.img_file.errors %}
+                <tr>
+                    <td colspan="2">{{ form.img_file.errors }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>{{ form.img_file.label_tag }}{{ form.img_file.help_text }}</td>
+                    <td>
+                        {{ form.img_file }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <button type="submit" class="btn btn-success">Upload</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+{% endblock content %}

@@ -73,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.static',
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -137,9 +139,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/account/login/'
 
-LOGOUT_URL = '/logout/'
+LOGOUT_URL = '/account/logout/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
