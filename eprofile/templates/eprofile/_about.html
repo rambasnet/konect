@@ -7,32 +7,40 @@
         <div class="tab-content">
             <div id="tab_summary" class="section tab-pane vertical-tab-pane active">
                 <h4 class="title">Summary</h4>
+                <hr class="heading">
                 <a href="{% url 'profile:update_summary' %}">
                     <div class="editContainer">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip"
-                          title="Click to update summary"
-                          data-placement="left"></span>
+                    <button class="btn btn-sm btn-info">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"
+                          data-placement="left"></span> | Edit summary
+                        </button>
                     </div>
                 </a>
-                <hr class="heading">
                 <div class="sectionContent">
                     {{ user_profile.summary|linebreaksbr }}
                 </div>
             </div>
             <div id="tab_education" class="section tab-pane vertical-tab-pane">
-                <h4>Academic Degrees</h4>
-                <a href="#">
+                <h4>Education</h4>
+                <hr class="heading">
+                <a href="{% url 'profile:update_school' %}">
                     <div class="editContainer">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip"
-                          title="Click to update education"
-                          data-placement="left"></span>
+                        <button class="btn btn-sm btn-info">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"
+                          data-placement="left"></span> | Add a college/high school
+                        </button>
                     </div>
                 </a>
-                <hr class="heading">
-                <div class="pContent">
-                    <p class="subtitle">PhD, Computer Science</p>
-                    <p class="subtitle">New Mexico Tech</p>
-                    <p class="subtitle">2010-2011</p>
+                {% if user_profile.schools %}
+                    <div class="pContent">
+                    {% for school in user_profile.schools %}
+
+                        <! -- ['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
+                  'conentrations', 'gpa', 'activities', 'societies', 'description']
+                        -->
+                        <p class="subtitle">{{ school.school }}</p>
+                    <p class="subtitle">{{ school.degree  }}, {{ school.major_field }}</p>
+                    <p class="subtitle">{{ school.from_year }} - {{ school.to_year }}</p>
                     <hr class="subsection">
                     <p class="subtitle">MS, Computer Science</p>
                     <p class="subtitle">New Mexico Tech</p>
@@ -42,6 +50,8 @@
                     <p class="subtitle">Colorado Mesa University</p>
                     <p class="subtitle">2001-2004</p>
                 </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

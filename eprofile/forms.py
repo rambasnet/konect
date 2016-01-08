@@ -1,6 +1,6 @@
 from django import forms
 
-from eprofile.models import Profile
+from eprofile.models import Profile, Education
 
 
 class ImageUploadForm(forms.Form):
@@ -60,3 +60,18 @@ class ProfileSummaryForm(forms.ModelForm):
         super(ProfileSummaryForm, self).__init__(*args, **kwargs)
         self.fields['summary'].required = False
         self.fields['summary'].widget.attrs['class'] = 'form-control'
+
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
+                  'major_field', 'conentrations', 'gpa', 'activities', 'societies', 'description']
+        labels= {
+            'address': 'Town/City, State',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EducationForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'

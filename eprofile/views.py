@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from eprofile.models import Photo, Profile
-from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm
+from eprofile.models import Photo, Profile, Education
+from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm, EducationForm
 from main import utility
 
 
@@ -15,7 +15,8 @@ from main import utility
 def profile(request):
     user_profile = Profile.objects.get(user=request.user)
     site_url = utility.get_site_url(request)
-    # print(site_url)
+    schools = Education.objects.filter(user=user_profile)
+    user_profile.schools = schools
     return render(request,
                   'eprofile/profile.html',
                   dict(user_profile=user_profile, site_url=site_url, ))
@@ -23,11 +24,7 @@ def profile(request):
 
 @login_required
 def home(request):
-    user_profile = Profile.objects.get(user=request.user)
-    site_url = utility.get_site_url(request)
-    return render(request,
-                  'eprofile/home.html',
-                  dict(user_profile=user_profile, site_url=site_url, ))
+    return profile(request)
 
 
 @login_required
@@ -131,7 +128,7 @@ def update_summary(request):
         summary_form = ProfileSummaryForm(request.POST, instance=user_profile)
         if summary_form.is_valid():
             summary_form.save()
-            return HttpResponseRedirect(reverse('profile:profile'))
+            return HttpResponseRedirect(reverse('profile:profile')+"#tab_summary")
 
     else:
         summary_form = ProfileSummaryForm(instance=user_profile)
@@ -141,4 +138,27 @@ def update_summary(request):
                        form_title='Update Profile Summary',
                        form_action=reverse('profile:update_summary'),
                        form=summary_form,
+                       user_profile=user_profile))
+
+
+@login_required
+def update_school(request):
+    site_url = utility.get_site_url(request)
+    user_profile = Profile.objects.get(user=request.user)
+
+    if request.POST:
+        school = Education(user=user_profile)
+        school_form = EducationForm(request.POST, instance=school)
+        if school_form.is_valid():
+            school_form.save()
+            return HttpResponseRedirect(reverse('profile:profile'))
+    else:
+        school_form = EducationForm(instance=Education())
+
+    return render(request,
+                  'eprofile/update_form.html',
+                  dict(site_url=site_url,
+                       form_title='Add a college/high school',
+                       form_action=reverse('profile:update_school'),
+                       form=school_form,
                        user_profile=user_profile))

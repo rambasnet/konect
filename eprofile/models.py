@@ -43,3 +43,27 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.email
 
+
+class Education(models.Model):
+    user = models.ForeignKey(Profile)
+    school = models.CharField(max_length=100, null=False, blank=False)
+    address = models.CharField(max_length=256, null=True, blank=True)
+    month_from = models.IntegerField( null=True, blank=True)
+    month_to = models.IntegerField(null=True, blank=True)
+    year_from = models.IntegerField(null=True, blank=True)
+    year_to = models.IntegerField(null=True, blank=True)
+    graduated = models.NullBooleanField(null=True, blank=True)
+    degree = models.CharField(max_length=20, null=True, blank=True)
+    major_field = models.CharField(max_length=20, null=True, blank=True)
+    conentrations = models.CharField(max_length=256, blank=True)
+    gpa = models.CharField(max_length=10, null=True, blank=True)
+    activities = models.TextField(null=True, blank=True)
+    societies = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-year_to', '-month_to']
+
+    def __str__(self):
+        return self.school
+

@@ -5,21 +5,18 @@
         <div class="cover"
                 {% if user_profile.cover_photo %}
              style="background-image: url({{ MEDIA_URL }}{{ user_profile.cover_photo }});"
-                {% endif %}
-             data-toggle="tooltip" title="Cover Photo">
-            <span class="glyphicon glyphicon-camera coverCameraPosition" aria-hidden="true"
-                  data-toggle="tooltip" title="Change Cover Photo"></span>
+                {% endif %}>
+            <span class="glyphicon glyphicon-camera coverCameraPosition"
+                  data-toggle="tooltip" title="Change Cover Photo" data-placement="right"></span>
         </div>
     </a>
     <div class="profilePhotoContainer">
         <a href="{% url 'profile:update_profile_photo' %}">
-            <div class="profilePhoto"
+            <div class="profilePhoto" aria-hidden="true" data-toggle="tooltip" title="Change Profile Photo"
                     {% if user_profile.profile_photo %}
                  style="background-image: url({{ MEDIA_URL }}{{ user_profile.profile_photo }});"
-                    {% endif %}
-                 data-toggle="tooltip" title="Profile Photo">
-            <span class="glyphicon glyphicon-camera profileCameraPosition" aria-hidden="true"
-                  data-toggle="tooltip" title="Change Profile Photo"></span>
+                    {% endif %}>
+            <span class="glyphicon glyphicon-camera profileCameraPosition"></span>
             </div>
         </a>
     </div>
@@ -32,8 +29,9 @@
     <div class="vCard">
         <a href="{% url 'profile:update_card' %}">
             <div class="editCardContainer">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Edit Card Info"
-                  data-placement="left"></span>
+                <button class="btn btn-sm btn-info">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> | Edit
+            </button>
             </div>
         </a>
         <h3 class="cardName">{{ user_profile.card_name }}

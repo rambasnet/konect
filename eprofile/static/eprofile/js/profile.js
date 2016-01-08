@@ -1,20 +1,17 @@
-/**
- * Created by user on 1/7/16.
- */
-var tabsFn = (function() {
 
-  function init() {
-    setHeight();
-  }
 
-  function setHeight() {
-    var $tabPane = $('.vertical-tab-pane'),
-        tabsHeight = $('.vertical-nav-tabs').height();
 
-    $tabPane.css({
-      height: tabsHeight
+// Javascript to enable link to tab
+$(document).ready(function () {
+
+    var hash = document.location.hash;
+    if (hash) {
+        $('nav-tabs a[href=#' + hash +']').tab('show');
+    }
+    // console.log(hash);
+     //console.log(prefix);
+// Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
     });
-  }
-
-  $(init);
-})();
+});
