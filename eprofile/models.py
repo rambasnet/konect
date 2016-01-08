@@ -37,6 +37,8 @@ class Profile(models.Model):
     card_email = models.EmailField(max_length=256, null=True)
     card_phone = models.CharField(max_length=30)
     card_office = models.CharField(max_length=100)
+    is_verified = models.NullBooleanField()
+    summary = models.TextField(null=True)
 
     def __str__(self):
         return self.user.email

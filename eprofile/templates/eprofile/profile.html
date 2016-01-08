@@ -1,7 +1,11 @@
 {% extends "eprofile/__base.html" %}
-{% block title %}{{ block.super }} | Profile{% endblock title %}
+{% load staticfiles %}
 
-{% block domain %}{{ domain |safe }}{% endblock domain %}
+{% block title %}{{ block.super }} | Profile{% endblock title %}
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="{% static 'eprofile/css/vertical_tab.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
 {% block header_extra %}
     {% include 'eprofile/_header.html' %}
 {% endblock header_extra %}
@@ -9,5 +13,12 @@
 {% endblock navigation %}
 {% block content %}
     {% include 'eprofile/_banner.html' %}
-    <h1>Welcome to your profile!</h1>
+     <div class="tab-content">
+        {% include 'eprofile/_timeline.html' %}
+        {% include 'eprofile/_about.html' %}
+    </div>
 {% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'eprofile/js/profile.js' %}"></script>
+{% endblock javascript %}

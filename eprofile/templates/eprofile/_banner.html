@@ -3,9 +3,9 @@
 <div class="bannerContainer">
     <a href="{% url 'profile:update_cover_photo' %}">
         <div class="cover"
-             {% if user_profile.cover_photo %}
-                style="background-image: url({{ MEDIA_URL }}{{ user_profile.cover_photo }});"
-             {% endif %}
+                {% if user_profile.cover_photo %}
+             style="background-image: url({{ MEDIA_URL }}{{ user_profile.cover_photo }});"
+                {% endif %}
              data-toggle="tooltip" title="Cover Photo">
             <span class="glyphicon glyphicon-camera coverCameraPosition" aria-hidden="true"
                   data-toggle="tooltip" title="Change Cover Photo"></span>
@@ -13,50 +13,84 @@
     </a>
     <div class="profilePhotoContainer">
         <a href="{% url 'profile:update_profile_photo' %}">
-        <div class="profilePhoto"
-             {% if user_profile.profile_photo %}
-                style="background-image: url({{ MEDIA_URL }}{{ user_profile.profile_photo }});"
-             {% endif %}
-             data-toggle="tooltip" title="Profile Photo">
+            <div class="profilePhoto"
+                    {% if user_profile.profile_photo %}
+                 style="background-image: url({{ MEDIA_URL }}{{ user_profile.profile_photo }});"
+                    {% endif %}
+                 data-toggle="tooltip" title="Profile Photo">
             <span class="glyphicon glyphicon-camera profileCameraPosition" aria-hidden="true"
                   data-toggle="tooltip" title="Change Profile Photo"></span>
-        </div>
+            </div>
         </a>
     </div>
-    <!-- empty div needed to counter the transparency effect of the background -->
+    <!-- empty div needed to counter the transparency effect of the background
+    fields = ['card_name', 'card_title', 'card_department', 'card_employer',
+                  'card_email', 'card_address1', 'card_address2', 'card_phone', 'card_office']
+    -->
+
     <div class="vCardContainer"></div>
     <div class="vCard">
-        <a href="{% url 'profile:update_card' %}"><div class="editCardContainer">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Edit Card Info"></span>
-        </div>
-            </a>
-        <h2 class="title">{{ user_profile.card_name }} <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-        </h2>
-        <h3 class="subtitle">{{ user_profile.card_title }}, Computer Science</h3>
-        <h4 class="subtitle">Colorado Mesa University</h4>
-        <h4 class="subtitle">Grand Junction, CO 81507</h4>
+        <a href="{% url 'profile:update_card' %}">
+            <div class="editCardContainer">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip" title="Edit Card Info"
+                  data-placement="left"></span>
+            </div>
+        </a>
+        <h3 class="cardName">{{ user_profile.card_name }}
+            {% if user_profile.is_verified %}
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" data-toggle="tooltip"
+                      data-placement="right" title="Verified Account"></span>
+            {% endif %}
+        </h3>
+        <h4 class="cardTitle">{{ user_profile.card_title }}
+            {% if user_profile.card_department %}, {{ user_profile.card_department }}{% endif %}</h4>
+        <h5 class="subtitle">
+            {% if user_profile.card_employer %}
+                {{ user_profile.card_employer }}
+            {% else %}&nbsp;
+            {% endif %}</h5>
+        <h5 class="subtitle">
+            {% if user_profile.card_address1 %}{{ user_profile.card_address1 }}
+            {% else %}&nbsp;
+            {% endif %}
+        </h5>
+        <h5 class="subtitle">
+            {% if user_profile.card_address2 %}{{ user_profile.card_address2 }}
+            {% else %}&nbsp;
+            {% endif %}
+        </h5>
         <table class="vCardContact">
             <tr>
                 <td><span class="glyphicon glyphicon-envelope" data-toggle="tooltip" title="Email"
-                          aria-hidden="true"></span></td>
-                <td><a href="mailto: {{ user.email }}"> {{ user.email }}</a></td>
+                          aria-hidden="true"></span>
+                    <a href="mailto:{% if user_profile.card_email %}{{ user_profile.card_email }}
+                    {% else %}{{ user.email }}
+                    {% endif %}">
+                        {% if user_profile.card_email %}{{ user_profile.card_email }}
+                            {% else %}{{ user.email }}
+                        {% endif %}</a></td>
+
+                <td>{% if user_profile.card_office %}
+                    <img src="{% static 'eprofile/img/icons/office.png' %}" width="20" data-toggle="tooltip"
+                         title="Office"/>
+                    {{ user_profile.card_office }}
+                {% else %}&nbsp;
+                {% endif %}</td>
+            </tr>
+            <tr>
+                <td> {% if user_profile.card_phone %}
+                    <span class="glyphicon glyphicon-phone-alt" aria-hidden="true" data-toggle="tooltip"
+                          title="Phone"></span>
+                    <a href="tel:{{ user_profile.card_phone }}">{{ user_profile.card_phone }}</a>
+                {% else %}&nbsp;
+                {% endif %}
                 </td>
-            </tr>
-            <tr>
-                <td><span class="glyphicon glyphicon-phone-alt" aria-hidden="true" data-toggle="tooltip"
-                          title="Phone"></span></td>
-                <td><a href="tel:970-248-1682">970-248-1682</a></td>
-            </tr>
-            <tr>
-                <td><img src="{% static 'eprofile/img/icons/office.png' %}" width="20" data-toggle="tooltip"
-                         title="Office"/></td>
-                <td>WS 119B</td>
             </tr>
         </table>
     </div>
     <div class="statsContainer"></div>
     <div class="conextStats">
-        <h2 class="subtitle">Conextions</h2>
+        <h4 class="subtitle">Conextions</h4>
         <a href="http://conext.rocks/facultyconext/"><span
                 aria-label="Faculty"><span class="glyphicon glyphicon-education"
                                            aria-hidden="true"></span>4</span></a>
@@ -67,14 +101,13 @@
         <a href="alumniconext"> <span aria-label="Alumni"><span class="glyphicon glyphicon-globe"
                                                                 aria-hidden="true"></span>2</span></a>
         <br>
-        <h2 class="subtitle">Profile Strength</h2>
+        <h5 class="subtitle">Profile Strength</h5>
         <span aria-label="Profile Strength"><img src="{% static 'eprofile/img/icons/profileStrength.png' %}"
                                                  alt="Profile Strength" width="30"> Associate Professor</span>
     </div>
-
 </div>
 
-<div class="tabContainer">
+<div class="mainTabContainer">
     <div class="tabs">
         <ul class="nav nav-pills">
             <li class="nav active">
@@ -95,7 +128,6 @@
             <li class="nav">
                 <a href="#Personal" data-toggle="tab">Personal</a>
             </li>
-
         </ul>
     </div>
 </div>

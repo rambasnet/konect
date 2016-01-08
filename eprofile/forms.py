@@ -10,7 +10,6 @@ class ImageUploadForm(forms.Form):
 
 
 class ProfileCardForm(forms.ModelForm):
-
     class Meta:
         model = Profile
         fields = ['card_name', 'card_title', 'card_department', 'card_employer',
@@ -48,3 +47,16 @@ class ProfileCardForm(forms.ModelForm):
 
         self.fields['card_name'].required = True
 
+
+class ProfileSummaryForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['summary']
+        labels ={
+            'summary': 'Update Summary',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileSummaryForm, self).__init__(*args, **kwargs)
+        self.fields['summary'].required = False
+        self.fields['summary'].widget.attrs['class'] = 'form-control'

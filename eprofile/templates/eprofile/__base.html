@@ -30,7 +30,7 @@
 <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{% block site_link %}{% endblock site_link %}">{% brand_name %}</a>
+            <a class="navbar-brand" href="{{ site_url }}">{% brand_name %}</a>
         </div>
         {% block header_extra %}{% endblock header_extra %}
     </div>
@@ -39,19 +39,26 @@
 <!-- main content of the page -->
 <div id="main" role="main">
     <div class="container">
+    <div class="row">
         {% block content %}{% endblock content %}
+    </div>
     </div>
 </div>
 
-<footer>
+<div class="page-footer">
     {% include 'eprofile/_footer.html' %}
     {% block footer_extra %}{% endblock footer_extra %}
-</footer>
+</div>
 {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
             integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
             crossorigin="anonymous"></script>
+    <script>
+    $(function (){
+        ('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
 {% endblock javascript %}
 </body>
 </html>

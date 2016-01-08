@@ -4,8 +4,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 from eprofile.models import Photo, Profile
-from eprofile.forms import ImageUploadForm, ProfileCardForm
+from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm
 from main import utility
+
+
 # Create your views here.
 
 
@@ -13,9 +15,19 @@ from main import utility
 def profile(request):
     user_profile = Profile.objects.get(user=request.user)
     site_url = utility.get_site_url(request)
+    # print(site_url)
     return render(request,
                   'eprofile/profile.html',
-                  dict(user_profile=user_profile, site_url= site_url,))
+                  dict(user_profile=user_profile, site_url=site_url, ))
+
+
+@login_required
+def home(request):
+    user_profile = Profile.objects.get(user=request.user)
+    site_url = utility.get_site_url(request)
+    return render(request,
+                  'eprofile/home.html',
+                  dict(user_profile=user_profile, site_url=site_url, ))
 
 
 @login_required
@@ -47,13 +59,13 @@ def update_cover_photo(request):
 
     message = ''
     return render(request,
-        'eprofile/photos.html',
-        dict(site_url=site_url,
-             form_heading='Upload Cover Photo',
-             instruction='Cover photo must be at least 300px tall and 900px wide.',
-             action=reverse('profile:update_cover_photo'),
-             form=form,
-             user_profile=user_profile))
+                  'eprofile/photos.html',
+                  dict(site_url=site_url,
+                       form_heading='Upload Cover Photo',
+                       instruction='Cover photo must be at least 300px tall and 900px wide.',
+                       action=reverse('profile:update_cover_photo'),
+                       form=form,
+                       user_profile=user_profile))
 
 
 @login_required
@@ -78,13 +90,13 @@ def update_profile_photo(request):
         form = ImageUploadForm()  # A empty, unbound form
 
     return render(request,
-        'eprofile/photos.html',
-        dict(site_url=site_url,
-             form_heading='Upload Profile Photo',
-             instruction='Cover photo must be at least 200px tall and 200px wide.',
-             action=reverse('profile:update_profile_photo'),
-             form=form,
-             user_profile=user_profile))
+                  'eprofile/photos.html',
+                  dict(site_url=site_url,
+                       form_heading='Upload Profile Photo',
+                       instruction='Cover photo must be at least 200px tall and 200px wide.',
+                       action=reverse('profile:update_profile_photo'),
+                       form=form,
+                       user_profile=user_profile))
 
 
 @login_required
@@ -92,19 +104,41 @@ def update_card(request):
     site_url = utility.get_site_url(request)
     user_profile = Profile.objects.get(user=request.user)
     # load existing card info
-    pro = Profile.objects.get(user=request.user)
+    user_profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
-        card_form = ProfileCardForm(request.POST, instance=pro)
+        card_form = ProfileCardForm(request.POST, instance=user_profile)
         if card_form.is_valid():
             card_form.save()
             return HttpResponseRedirect(reverse('profile:profile'))
-        else:
-            print('errors = ', card_form.errors)
     else:
-        card_form = ProfileCardForm(instance=pro)
+        card_form = ProfileCardForm(instance=user_profile)
 
     return render(request,
-                  'eprofile/update_card.html',
+                  'eprofile/update_form.html',
                   dict(site_url=site_url,
+                       form_title='Update Profile Card Information',
+                       form_action=reverse('profile:update_card'),
                        form=card_form,
+                       user_profile=user_profile))
+
+
+@login_required
+def update_summary(request):
+    site_url = utility.get_site_url(request)
+    user_profile = Profile.objects.get(user=request.user)
+    # pro = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        summary_form = ProfileSummaryForm(request.POST, instance=user_profile)
+        if summary_form.is_valid():
+            summary_form.save()
+            return HttpResponseRedirect(reverse('profile:profile'))
+
+    else:
+        summary_form = ProfileSummaryForm(instance=user_profile)
+    return render(request,
+                  'eprofile/update_form.html',
+                  dict(site_url=site_url,
+                       form_title='Update Profile Summary',
+                       form_action=reverse('profile:update_summary'),
+                       form=summary_form,
                        user_profile=user_profile))

@@ -5,8 +5,7 @@
             <input type="text" class="form-control" aria-label="Search" style="width:100%;"
                    placeholder="Search universities, programs, people, business...">
             <div class="input-group-btn">
-                <a class="btn btn-default" href="/dummy_search"><span class="glyphicon glyphicon-search"
-                                                                      aria-hidden="true"></span></a>
+                <a class="btn btn-default" href="/dummy_search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
             </div>
         </div>
     </form>
@@ -14,7 +13,7 @@
         <li><a class="dropdown-toggle btn-lg" data-toggle="dropdown" role="button" aria-expanded="false"><span
                 class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="/profile/edit/">Edit Profile</a></li>
+                <li><a href="{% url 'profile:edit_profile' %}">Edit Profile</a></li>
             </ul>
         </li>
         <li>

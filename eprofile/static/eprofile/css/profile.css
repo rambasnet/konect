@@ -115,27 +115,22 @@ table.vCardContact {
     margin-left: 5px;
 }
 
-p.contact {
+.cardName {
     margin: 5px;
+    font-size: 18px;
 }
 
-.title {
-    margin: 5px;
-    font-size: 20px;
-}
-
-.subtitle {
+.cardTitle {
     margin: 5px;
     font-size: 16px;
 }
 
-div.banner p {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 14px;
+.subtitle
+{
+    margin:4px;
 }
 
-div.tabContainer {
+div.mainTabContainer {
     height: auto;
     width: 900px;
     background-color: white;
@@ -167,14 +162,6 @@ div.tabContentContainer {
     left: 230px;
     z-index: 2;
     width: 670px;
-}
-
-div.section {
-    background-color: white;
-    border-bottom: 1px solid #d9d9d9;
-    border-right: 1px solid #d9d9d9;
-    margin-top: 5px;
-    padding: 10px;
 }
 
 .endorseForm {
@@ -236,4 +223,33 @@ div.alerts {
     margin:20px;
     font-size:20px;
     color:white;
+}
+
+div.section
+{
+    background-color: white;
+    border-left: 1px solid #d9d9d9;;
+    padding: 10px;
+    position: relative;
+    left:0;
+    top:0;
+}
+
+.editContainer {
+    position: absolute;
+    font-size: 20px;
+    right: 10px;
+    top: 10px;
+    display: none;
+}
+
+.section:hover .editContainer
+{
+    display: block;
+}
+
+.verticalTab
+{
+    background-color: #666666;
+    margin:0 !important;
 }

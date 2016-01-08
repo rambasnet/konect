@@ -8,6 +8,7 @@ body {
     height: 100%;
     background-color: gainsboro;
     color: #000;
+    margin:0;
 }
 
 .navbar-brand {
@@ -26,14 +27,12 @@ body {
 
 }
 
-footer {
-    position: absolute;
-    bottom: 0px;
+.page-footer {
     background-color: white;
-    left: 0px;
     width: 100%;
     padding: 10px;
     margin-top: 50px;
+    margin-bottom: 0px;
 }
 
 a:link, a:visited, a:hover, a:active {

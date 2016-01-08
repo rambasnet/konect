@@ -1,0 +1,48 @@
+<div class="tab-pane fade" id="About">
+    <div class="vertical-tabs-container">
+        <ul class="nav nav-tabs vertical-nav-tabs">
+            <li class="active"><a href="#tab_summary" data-toggle="tab">Summary</a></li>
+            <li><a href="#tab_education" data-toggle="tab">Education</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab_summary" class="section tab-pane vertical-tab-pane active">
+                <h4 class="title">Summary</h4>
+                <a href="{% url 'profile:update_summary' %}">
+                    <div class="editContainer">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip"
+                          title="Click to update summary"
+                          data-placement="left"></span>
+                    </div>
+                </a>
+                <hr class="heading">
+                <div class="sectionContent">
+                    {{ user_profile.summary|linebreaksbr }}
+                </div>
+            </div>
+            <div id="tab_education" class="section tab-pane vertical-tab-pane">
+                <h4>Academic Degrees</h4>
+                <a href="#">
+                    <div class="editContainer">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" data-toggle="tooltip"
+                          title="Click to update education"
+                          data-placement="left"></span>
+                    </div>
+                </a>
+                <hr class="heading">
+                <div class="pContent">
+                    <p class="subtitle">PhD, Computer Science</p>
+                    <p class="subtitle">New Mexico Tech</p>
+                    <p class="subtitle">2010-2011</p>
+                    <hr class="subsection">
+                    <p class="subtitle">MS, Computer Science</p>
+                    <p class="subtitle">New Mexico Tech</p>
+                    <p class="subtitle">2005-2007</p>
+                    <hr class="subsection">
+                    <p class="subtitle">BSc, Computer Science</p>
+                    <p class="subtitle">Colorado Mesa University</p>
+                    <p class="subtitle">2001-2004</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
