@@ -1,7 +1,9 @@
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from eprofile.models import Photo, Profile, Education
 from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm, EducationForm
@@ -142,23 +144,41 @@ def update_summary(request):
 
 
 @login_required
-def update_school(request):
+def update_school(request, uuid=None):
     site_url = utility.get_site_url(request)
     user_profile = Profile.objects.get(user=request.user)
-
+    form_title='Add a college/school'
+    form_action=reverse('profile:update_school')
     if request.POST:
-        school = Education(user=user_profile)
-        school_form = EducationForm(request.POST, instance=school)
+        if not uuid:
+            # must be a new school
+            school = Education(user=user_profile)
+            school_form = EducationForm(request.POST, instance=school)
+        else:
+            school = Education.objects.get(Q(user=user_profile) & Q(uuid=uuid))
+            # some one may have tried to hack db
+            if school:
+                school_form = EducationForm(request.POST, instance=school)
+            else:
+                return HttpResponseRedirect(reverse('profile:profile'))
+
         if school_form.is_valid():
             school_form.save()
             return HttpResponseRedirect(reverse('profile:profile'))
     else:
-        school_form = EducationForm(instance=Education())
+        if uuid:
+            # load existing data to update
+            school = Education.objects.get(uuid=uuid)
+            school_form = EducationForm(instance=school)
+            form_title = 'Edit college/school'
+            form_action = reverse('profile:update_school_uuid', kwargs={'uuid':uuid})
+        else:
+            school_form = EducationForm()
 
     return render(request,
-                  'eprofile/update_form.html',
+                  'eprofile/school.html',
                   dict(site_url=site_url,
-                       form_title='Add a college/high school',
-                       form_action=reverse('profile:update_school'),
+                       form_title=form_title,
+                       form_action=form_action,
                        form=school_form,
                        user_profile=user_profile))

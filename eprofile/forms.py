@@ -1,7 +1,37 @@
+import datetime
 from django import forms
 
 from eprofile.models import Profile, Education
 
+
+MONTHS = [
+    ('0', 'Month'),
+    ('1', 'January'),
+    ('2', 'February'),
+    ('3', 'March'),
+    ('4', 'April'),
+    ('5', 'May'),
+    ('6', 'June'),
+    ('7', 'July'),
+    ('8', 'August'),
+    ('9', 'September'),
+    ('10', 'October'),
+    ('11', 'November'),
+    ('12', 'December'),
+]
+
+
+def get_year_choices(year_from=True):
+    year_choices = [('0', 'Year'),]
+    start_year = datetime.date.today().year-61
+    if year_from:
+        for i in range(datetime.date.today().year, start_year, -1):
+            year_choices.append((i, i))
+    else:
+        for i in range(datetime.date.today().year+10, start_year, -1):
+            year_choices.append((i, i))
+
+    return year_choices
 
 class ImageUploadForm(forms.Form):
     img_file = forms.ImageField(
@@ -66,12 +96,25 @@ class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
         fields = ['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
-                  'major_field', 'conentrations', 'gpa', 'activities', 'societies', 'description']
+                  'major_field', 'concentrations', 'gpa', 'activities', 'societies', 'description']
         labels= {
+            'school': 'College/School *',
             'address': 'Town/City, State',
+            'gpa': 'GPA',
+            'month_from': 'Month',
+            'month_to': 'Month',
+            'year_from': 'Year',
+            'year_to': 'Year',
         }
 
     def __init__(self, *args, **kwargs):
         super(EducationForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+        self.fields['month_from'] = forms.ChoiceField(choices=MONTHS)
+        self.fields['month_to'] = forms.ChoiceField(choices=MONTHS)
+        self.fields['year_from'] = forms.ChoiceField(choices=get_year_choices())
+        self.fields['year_to'] = forms.ChoiceField(choices=get_year_choices(False))
+        self.fields['activities'].widget.attrs['rows'] = 3
+        self.fields['societies'].widget.attrs['rows'] = 3
+        self.fields['description'].widget.attrs['rows'] = 5

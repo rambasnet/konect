@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -11,7 +13,7 @@ def user_directory_path(instance, filename):
 class Photo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=user_directory_path, max_length=256, null=False)
-    timestamp = models.DateTimeField(default=timezone.now, null=False)
+    created = models.DateTimeField(default=timezone.now, null=False)
     album = models.CharField(max_length=256, null=False)
 
     def __str__(self):
@@ -22,6 +24,8 @@ class Photo(models.Model):
 class Profile(models.Model):
     #foreign key to tie this info to the user
     user = models.OneToOneField(User)
+    created = models.DateTimeField(editable=False, null=False)
+    modified = models.DateTimeField(null=True)
     #used to track language preference when we implement it
     locale = models.CharField(max_length=10, null= True)
     #Holds a profile picture on our site
@@ -43,9 +47,21 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.email
 
+    def save(self, *args, **kwargs):
+        '''
+        On save, update timestamps
+        '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        return super(Profile, self).save(*args, **kwargs)
+
 
 class Education(models.Model):
     user = models.ForeignKey(Profile)
+    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    created = models.DateTimeField(null=True, editable=False)
+    modified = models.DateTimeField(null=True)
     school = models.CharField(max_length=100, null=False, blank=False)
     address = models.CharField(max_length=256, null=True, blank=True)
     month_from = models.IntegerField( null=True, blank=True)
@@ -55,7 +71,7 @@ class Education(models.Model):
     graduated = models.NullBooleanField(null=True, blank=True)
     degree = models.CharField(max_length=20, null=True, blank=True)
     major_field = models.CharField(max_length=20, null=True, blank=True)
-    conentrations = models.CharField(max_length=256, blank=True)
+    concentrations = models.CharField(max_length=256, blank=True)
     gpa = models.CharField(max_length=10, null=True, blank=True)
     activities = models.TextField(null=True, blank=True)
     societies = models.TextField(null=True, blank=True)
@@ -66,4 +82,14 @@ class Education(models.Model):
 
     def __str__(self):
         return self.school
+
+    def save(self, *args, **kwargs):
+        '''
+        On save, update timestamps
+        '''
+        if not self.id:
+            self.create = timezone.now()
+
+        self.modified = timezone.now()
+        return super(Education, self).save(*args, **kwargs)
 

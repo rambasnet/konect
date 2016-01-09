@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^update_card/$', views.update_card, name='update_card'),
     url(r'^update_summary/$', views.update_summary, name='update_summary'),
     url(r'^update_school/$', views.update_school, name='update_school'),
+    url(r'^update_school/(?P<uuid>.*)/$', views.update_school, name='update_school_uuid'),
 ]

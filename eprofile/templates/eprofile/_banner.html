@@ -12,7 +12,7 @@
     </a>
     <div class="profilePhotoContainer">
         <a href="{% url 'profile:update_profile_photo' %}">
-            <div class="profilePhoto" aria-hidden="true" data-toggle="tooltip" title="Change Profile Photo"
+            <div class="profilePhoto aria-hidden="true" data-toggle="tooltip" title="Change Profile Photo"
                     {% if user_profile.profile_photo %}
                  style="background-image: url({{ MEDIA_URL }}{{ user_profile.profile_photo }});"
                     {% endif %}>
@@ -34,25 +34,25 @@
             </button>
             </div>
         </a>
-        <h3 class="cardName">{{ user_profile.card_name }}
+        <h4 class="cardName">{{ user_profile.card_name }}
             {% if user_profile.is_verified %}
                 <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" data-toggle="tooltip"
                       data-placement="right" title="Verified Account"></span>
             {% endif %}
-        </h3>
-        <h4 class="cardTitle">{{ user_profile.card_title }}
-            {% if user_profile.card_department %}, {{ user_profile.card_department }}{% endif %}</h4>
-        <h5 class="subtitle">
+        </h4>
+        <h5 class="cardTitle">{{ user_profile.card_title }}
+            {% if user_profile.card_department %}, {{ user_profile.card_department }}{% endif %}</h5>
+        <h6 class="cardOther">
             {% if user_profile.card_employer %}
                 {{ user_profile.card_employer }}
             {% else %}&nbsp;
-            {% endif %}</h5>
-        <h5 class="subtitle">
+            {% endif %}</h6>
+        <h6 class="cardOther">
             {% if user_profile.card_address1 %}{{ user_profile.card_address1 }}
             {% else %}&nbsp;
             {% endif %}
-        </h5>
-        <h5 class="subtitle">
+        </h6>
+        <h5 class="cardOther">
             {% if user_profile.card_address2 %}{{ user_profile.card_address2 }}
             {% else %}&nbsp;
             {% endif %}

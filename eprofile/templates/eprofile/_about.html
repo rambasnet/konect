@@ -1,3 +1,4 @@
+{% load main_extras %}
 <div class="tab-pane fade" id="About">
     <div class="vertical-tabs-container">
         <ul class="nav nav-tabs vertical-nav-tabs">
@@ -6,50 +7,66 @@
         </ul>
         <div class="tab-content">
             <div id="tab_summary" class="section tab-pane vertical-tab-pane active">
-                <h4 class="title">Summary</h4>
-                <hr class="heading">
-                <a href="{% url 'profile:update_summary' %}">
-                    <div class="editContainer">
-                    <button class="btn btn-sm btn-info">
+                <div class="editContainer">
+                    <a href="{% url 'profile:update_summary' %}">
+                        <button class="btn btn-sm btn-info">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"
                           data-placement="left"></span> | Edit summary
                         </button>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
+                <h3>Summary</h3>
+                <hr class="heading">
                 <div class="sectionContent">
                     {{ user_profile.summary|linebreaksbr }}
                 </div>
             </div>
             <div id="tab_education" class="section tab-pane vertical-tab-pane">
-                <h4>Education</h4>
-                <hr class="heading">
-                <a href="{% url 'profile:update_school' %}">
-                    <div class="editContainer">
+                <div class="editContainer">
+                    <a href="{% url 'profile:update_school' %}">
                         <button class="btn btn-sm btn-info">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"
-                          data-placement="left"></span> | Add a college/high school
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"
+                          data-placement="left"></span> | Add a college/school
                         </button>
-                    </div>
-                </a>
-                {% if user_profile.schools %}
-                    <div class="pContent">
-                    {% for school in user_profile.schools %}
-
-                        <! -- ['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
-                  'conentrations', 'gpa', 'activities', 'societies', 'description']
-                        -->
-                        <p class="subtitle">{{ school.school }}</p>
-                    <p class="subtitle">{{ school.degree  }}, {{ school.major_field }}</p>
-                    <p class="subtitle">{{ school.from_year }} - {{ school.to_year }}</p>
-                    <hr class="subsection">
-                    <p class="subtitle">MS, Computer Science</p>
-                    <p class="subtitle">New Mexico Tech</p>
-                    <p class="subtitle">2005-2007</p>
-                    <hr class="subsection">
-                    <p class="subtitle">BSc, Computer Science</p>
-                    <p class="subtitle">Colorado Mesa University</p>
-                    <p class="subtitle">2001-2004</p>
+                    </a>
                 </div>
+                <h3>Education</h3>
+                <hr>
+                {% if user_profile.schools %}
+                    {% for school in user_profile.schools %}
+                        <div class="subSection">
+                            <div class="editContainer">
+                                <a class="btn btn-sm btn-info"
+                                   href="{% url 'profile:update_school' %}{{ school.uuid }}">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"
+                                data-placement="left"></span> | Edit
+                                </a>
+                            </div>
+
+                            <! -- ['school', 'address', 'month_from', 'month_to', 'year_from', 'year_to', 'graduated',
+                            'degree',
+                            'conentrations', 'gpa', 'activities', 'societies', 'description']
+                            -->
+                            <h4>{{ school.school }}</h4>
+                            <h5>{% if school.address %}{{ school.address }}{% else %}Add address{% endif %}
+                            </h5>
+                            <h5>{% if school.degree %}{{ school.degree }}, {% else %}Add Degree,{% endif %}
+                                {% if school.major_field %}{{ school.major_field }}{% else %}Add Major Field{% endif %}
+                            </h5>
+                            <h6>{{ school.month_from|month_name }}
+                                {% if school.year_from %} {{ school.year_from }}{% else %}Add year {% endif %} -
+                                {{ school.month_to|month_name }} {{ school.year_to }}
+                            </h6>
+                            <h6>{% if school.gpa %}{{ shcool.gpa }}{% else %}Add GPA{% endif %}</h6>
+                            <h6>{% if school.concentrations %}{{ school.concentrations }}{% else %}
+                                Add Concentrations{% endif %}</h6>
+                            <h6>{% if school.activities %}{{ school.activities }}{% else %}Add Activities
+                            {% endif %}</h6>
+                            <h6>{% if school.description %}{{ school.description }}{% else %}
+                            Add Description{% endif %}</h6>
+                            <hr>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>

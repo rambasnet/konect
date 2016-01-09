@@ -1,0 +1,115 @@
+{% extends "eprofile/__base.html" %}
+{% load main_extras %}
+{% block title %}{{ block.super }} | {{ form_title }}{% endblock title %}
+
+{% block header_extra %}
+    {% include 'eprofile/_header.html' %}
+{% endblock header_extra %}
+{% block navigation %}
+{% endblock navigation %}
+{% block content %}
+    <div id="form_container">
+        <h3>{{ form_title }}</h3>
+        <hr>
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger fade in form-group center" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{ form.non_field_errors |safe }}
+            </div>
+        {% endif %}
+        <!--['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
+                      'major_field', 'conentrations', 'gpa', 'activities', 'societies', 'description']
+                      -->
+        <form class="form-horizontal" role="form" action="{{ form_action }}" method="post">
+            {% csrf_token %}
+            <div class="form-group has-feedback {% if form.school.errors %} has-error {% else %} has-success {% endif %}">
+                <label class="control-label col-sm-4"
+                       for="{{ form.school.id_for_label }}">{{ form.school.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.school }}
+                        <span class="form-control-feedback glyphicon {% if field.errors %} glyphicon-remove {% else %}
+                        glyphicon-ok" {% endif %} aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.address }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Dates Attended</label>
+                <div class="col-sm-3">
+                    {{ form.month_from }} {{ form.year_from }}
+                </div>
+                <label class="control-label col-sm-1">to</label>
+                <div class="col-sm-4">
+                    {{ form.month_to }} {{ form.year_to }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.graduated.id_for_label }}">{{ form.graduated.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.graduated }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.degree.id_for_label }}">{{ form.degree.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.degree }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.major_field.id_for_label }}">{{ form.major_field.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.major_field }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.concentrations.id_for_label }}">{{ form.concentrations.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.concentrations }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="{{ form.gpa.id_for_label }}">{{ form.gpa.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.gpa }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.activities.id_for_label }}">{{ form.activities.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.activities }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.societies.id_for_label }}">{{ form.societies.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.societies }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4"
+                       for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">&nbsp;</label>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn-lg btn-info btn-block">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -117,17 +117,20 @@ table.vCardContact {
 
 .cardName {
     margin: 5px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bolder;
 }
 
 .cardTitle {
     margin: 5px;
     font-size: 16px;
+    font-weight: bold;
 }
 
-.subtitle
+.cardOther
 {
-    margin:4px;
+    margin: 5px;
+    font-size: 14px;
 }
 
 div.mainTabContainer {
@@ -235,6 +238,12 @@ div.section
     top:0;
 }
 
+.subSection {
+    position: relative;
+    left:0;
+    top:0;
+}
+
 .editContainer {
     position: absolute;
     font-size: 20px;
@@ -243,7 +252,12 @@ div.section
     display: none;
 }
 
-.section:hover .editContainer
+.section:hover > .editContainer
+{
+    display: block;
+}
+
+.subSection:hover > .editContainer
 {
     display: block;
 }
