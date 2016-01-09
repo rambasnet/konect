@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 
-from eprofile.models import Profile, Education
+from eprofile.models import Profile, Education, Experience
 
 
 MONTHS = [
@@ -95,11 +95,11 @@ class ProfileSummaryForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
-        fields = ['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
+        fields = ['school', 'location', 'month_from', 'year_from', 'current', 'month_to',  'year_to', 'graduated', 'degree',
                   'major_field', 'concentrations', 'gpa', 'activities', 'societies', 'description']
         labels= {
             'school': 'College/School *',
-            'address': 'Town/City, State',
+            'location': 'Town/City, State',
             'gpa': 'GPA',
             'month_from': 'Month',
             'month_to': 'Month',
@@ -118,3 +118,31 @@ class EducationForm(forms.ModelForm):
         self.fields['activities'].widget.attrs['rows'] = 3
         self.fields['societies'].widget.attrs['rows'] = 3
         self.fields['description'].widget.attrs['rows'] = 5
+
+
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['company', 'location', 'month_from', 'year_from', 'month_to',
+                  'year_to', 'title', 'current', 'description']
+        labels= {
+            'company': 'Company *',
+            'location': 'Town/City, State',
+            'month_from': 'Month',
+            'month_to': 'Month',
+            'year_from': 'Year',
+            'year_to': 'Year',
+            'title': 'Title *',
+            'current': 'I currently work here',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ExperienceForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        self.fields['month_from'] = forms.ChoiceField(choices=MONTHS)
+        self.fields['month_to'] = forms.ChoiceField(choices=MONTHS)
+        self.fields['year_from'] = forms.ChoiceField(choices=get_year_choices())
+        self.fields['year_to'] = forms.ChoiceField(choices=get_year_choices(False))
+        self.fields['description'].widget.attrs['rows'] = 5
+        self.fields['current'].widget.attrs['class'] = ''

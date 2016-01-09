@@ -69,8 +69,8 @@
                         {% endif %}</a></td>
 
                 <td>{% if user_profile.card_office %}
-                    <img src="{% static 'eprofile/img/icons/office.png' %}" width="20" data-toggle="tooltip"
-                         title="Office"/>
+                    <span class="glyphicon glyphicon-th-large" aria-hidden="true" data-toggle="tooltip"
+                         title="Office"></span>
                     {{ user_profile.card_office }}
                 {% else %}&nbsp;
                 {% endif %}</td>

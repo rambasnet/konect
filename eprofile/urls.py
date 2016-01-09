@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^update_summary/$', views.update_summary, name='update_summary'),
     url(r'^update_school/$', views.update_school, name='update_school'),
     url(r'^update_school/(?P<uuid>.*)/$', views.update_school, name='update_school_uuid'),
+    url(r'^experience/$', views.experience, name='experience'),
+    url(r'^experience/(?P<uuid>.*)/$', views.experience, name='update_experience'),
 ]

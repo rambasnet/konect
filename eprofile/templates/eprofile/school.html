@@ -18,9 +18,6 @@
                 {{ form.non_field_errors |safe }}
             </div>
         {% endif %}
-        <!--['school', 'address', 'month_from', 'month_to',  'year_from', 'year_to', 'graduated', 'degree',
-                      'major_field', 'conentrations', 'gpa', 'activities', 'societies', 'description']
-                      -->
         <form class="form-horizontal" role="form" action="{{ form_action }}" method="post">
             {% csrf_token %}
             <div class="form-group has-feedback {% if form.school.errors %} has-error {% else %} has-success {% endif %}">
@@ -34,19 +31,15 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-4"
-                       for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                       for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
                 <div class="col-sm-8">
                     {{ form.address }}
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-4">Dates Attended</label>
-                <div class="col-sm-3">
-                    {{ form.month_from }} {{ form.year_from }}
-                </div>
-                <label class="control-label col-sm-1">to</label>
-                <div class="col-sm-4">
-                    {{ form.month_to }} {{ form.year_to }}
+                <div class="col-sm-8">
+                    {{ form.month_from }} {{ form.year_from }} &nbsp; <label>to</label> &nbsp; {{ form.month_to }} {{ form.year_to }}
                 </div>
             </div>
             <div class="form-group">

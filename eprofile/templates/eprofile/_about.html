@@ -4,14 +4,14 @@
         <ul class="nav nav-tabs vertical-nav-tabs">
             <li class="active"><a href="#tab_summary" data-toggle="tab">Summary</a></li>
             <li><a href="#tab_education" data-toggle="tab">Education</a></li>
+            <li><a href="#tab_experience" data-toggle="tab">Work Experience</a></li>
         </ul>
         <div class="tab-content">
             <div id="tab_summary" class="section tab-pane vertical-tab-pane active">
                 <div class="editContainer">
                     <a href="{% url 'profile:update_summary' %}">
                         <button class="btn btn-sm btn-info">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"
-                          data-placement="left"></span> | Edit summary
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> | Edit summary
                         </button>
                     </a>
                 </div>
@@ -31,7 +31,7 @@
                         </button>
                     </a>
                 </div>
-                <h3>Education</h3>
+                <h3> <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Education</h3>
                 <hr>
                 {% if user_profile.schools %}
                     {% for school in user_profile.schools %}
@@ -43,13 +43,8 @@
                                 data-placement="left"></span> | Edit
                                 </a>
                             </div>
-
-                            <! -- ['school', 'address', 'month_from', 'month_to', 'year_from', 'year_to', 'graduated',
-                            'degree',
-                            'conentrations', 'gpa', 'activities', 'societies', 'description']
-                            -->
                             <h4>{{ school.school }}</h4>
-                            <h5>{% if school.address %}{{ school.address }}{% else %}Add address{% endif %}
+                            <h5>{% if school.location %}{{ school.location }}{% else %}Add location{% endif %}
                             </h5>
                             <h5>{% if school.degree %}{{ school.degree }}, {% else %}Add Degree,{% endif %}
                                 {% if school.major_field %}{{ school.major_field }}{% else %}Add Major Field{% endif %}
@@ -58,13 +53,53 @@
                                 {% if school.year_from %} {{ school.year_from }}{% else %}Add year {% endif %} -
                                 {{ school.month_to|month_name }} {{ school.year_to }}
                             </h6>
-                            <h6>{% if school.gpa %}{{ shcool.gpa }}{% else %}Add GPA{% endif %}</h6>
-                            <h6>{% if school.concentrations %}{{ school.concentrations }}{% else %}
-                                Add Concentrations{% endif %}</h6>
-                            <h6>{% if school.activities %}{{ school.activities }}{% else %}Add Activities
-                            {% endif %}</h6>
-                            <h6>{% if school.description %}{{ school.description }}{% else %}
-                            Add Description{% endif %}</h6>
+                            <h6><label>GPA:</label> {% if school.gpa %}{{ school.gpa }}{% else %}Add GPA{% endif %}</h6>
+                            <p><label>Concentrations:</label> {% if school.concentrations %}{{ school.concentrations|linebreaksbr  }}{% else %}
+                                Add Concentrations{% endif %}</p>
+                            <p><label>Societies:</label> {% if school.societies %}{{ school.societies|linebreaksbr  }}
+                            {% else %}Add Societies{% endif %}</p>
+                            <p><label>Activities:</label> {% if school.activities %}{{ school.activities|linebreaksbr  }}{% else %}Add Activities
+                            {% endif %}</p>
+                            <p><label>Description:</label> {% if school.description %}{{ school.description|linebreaksbr  }}{% else %}
+                            Add Description{% endif %}</p>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+         <div id="tab_experience" class="section tab-pane vertical-tab-pane">
+                <div class="editContainer">
+                    <a href="{% url 'profile:experience' %}">
+                        <button class="btn btn-sm btn-info">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"
+                          data-placement="left"></span> | Add a position
+                        </button>
+                    </a>
+                </div>
+                <h3> <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Work Experience</h3>
+                <hr>
+                {% if user_profile.positions %}
+                    {% for position in user_profile.positions %}
+                        <div class="subSection">
+                            <div class="editContainer">
+                                <a class="btn btn-sm btn-info"
+                                   href="{% url 'profile:update_education' %}{{ position.uuid }}">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"
+                                data-placement="left"></span> | Edit
+                                </a>
+                            </div>
+                            <h4>{{ position.title }}</h4>
+                            <h5>{{ position.company }}</h5>
+                            <h6>{% if position.location %}{{ position.location }}{% else %}Add location{% endif %}</h6>
+                            <h6>{{ position.month_from|month_name }} {{ position.year_from }}
+                                {% if position.current %}Present{% else %} -
+                                {{ position.month_to|month_name }} {{ position.year_to }}
+                                {% endif %}
+                            </h6>
+                            <h6 style="margin-bottom:0;"><label>Description:</label></h6>
+                            <p>{% if school.description %}{{ school.description|linebreaksbr }}{% else %}
+                            Add Description{% endif %}
+                            </p>
                             <hr>
                         </div>
                     {% endfor %}

@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-from eprofile.models import Photo, Profile, Education
-from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm, EducationForm
+from eprofile.models import Photo, Profile, Education, Experience
+from eprofile.forms import ImageUploadForm, ProfileCardForm, ProfileSummaryForm, EducationForm, ExperienceForm
 from main import utility
 
 
@@ -19,6 +19,7 @@ def profile(request):
     site_url = utility.get_site_url(request)
     schools = Education.objects.filter(user=user_profile)
     user_profile.schools = schools
+    user_profile.positions = Experience.objects.filter(user=user_profile)
     return render(request,
                   'eprofile/profile.html',
                   dict(user_profile=user_profile, site_url=site_url, ))
@@ -181,4 +182,46 @@ def update_school(request, uuid=None):
                        form_title=form_title,
                        form_action=form_action,
                        form=school_form,
+                       user_profile=user_profile))
+
+
+@login_required
+def experience(request, uuid=None):
+    site_url = utility.get_site_url(request)
+    user_profile = Profile.objects.get(user=request.user)
+    form_title='Add a position'
+    form_action=reverse('profile:experience')
+    if request.POST:
+        if not uuid:
+            # must be a new position
+            exp = Experience(user=user_profile)
+            exp_form = ExperienceForm(request.POST, instance=exp)
+        else:
+            exps = Experience.objects.filter(Q(user=user_profile) & Q(uuid=uuid))
+            if exps:
+                exp = exps[0]
+                exp_form = EducationForm(request.POST, instance=exp)
+            else:
+                # some one may be trying to hack ?
+                return HttpResponseRedirect(reverse('profile:profile')+"#tab_experience")
+
+        if exp_form.is_valid():
+            exp_form.save()
+            return HttpResponseRedirect(reverse('profile:profile'))
+    else:
+        if uuid:
+            # load existing data to update
+            exp = Experience.objects.get(uuid=uuid)
+            exp_form = EducationForm(instance=exp)
+            form_title = 'Edit position'
+            form_action = reverse('profile:update_experience', kwargs={'uuid':uuid})
+        else:
+            exp_form = ExperienceForm()
+
+    return render(request,
+                  'eprofile/experience.html',
+                  dict(site_url=site_url,
+                       form_title=form_title,
+                       form_action=form_action,
+                       form=exp_form,
                        user_profile=user_profile))
